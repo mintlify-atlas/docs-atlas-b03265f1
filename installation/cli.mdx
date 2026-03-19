@@ -50,6 +50,7 @@ The generated `components.json` looks like this:
   "rsc": true,
   "tsx": true,
   "tailwind": {
+    "config": "",
     "css": "app/globals.css",
     "baseColor": "neutral",
     "cssVariables": true,
@@ -62,6 +63,9 @@ The generated `components.json` looks like this:
     "ui": "@/components/ui",
     "lib": "@/lib",
     "hooks": "@/hooks"
+  },
+  "registries": {
+    "@rareui": "https://rareui.in/r/{name}.json"
   }
 }
 ```
