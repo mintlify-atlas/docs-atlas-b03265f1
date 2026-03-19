@@ -1,0 +1,190 @@
+---
+title: "Liquid Wave"
+description: "A full-bleed interactive fluid dynamics background powered by Three.js WebGL, with mouse-driven waves and multi-color gradient palettes."
+---
+
+## Overview
+
+`LiquidWave` runs a real-time fluid simulation on a WebGL canvas using Three.js — computing advection, divergence, pressure, and viscosity passes every frame. Mouse movement injects force vectors into the fluid, creating organic wave trails. When idle, an autonomous demo driver animates the fluid automatically.
+
+<Note>
+This component is designed as a full-bleed background container. Set its parent to `position: relative` with an explicit `width` and `height` (e.g. `100vw` / `100vh`). The canvas fills its container automatically.
+</Note>
+
+## Installation
+
+<CodeGroup>
+
+```bash npm
+npx rareui@latest add liquid-wave
+```
+
+```bash pnpm
+pnpm dlx rareui@latest add liquid-wave
+```
+
+```bash yarn
+yarn dlx rareui@latest add liquid-wave
+```
+
+```bash bun
+bunx rareui@latest add liquid-wave
+```
+
+</CodeGroup>
+
+<Note>
+Requires `three` as a peer dependency.
+```bash
+npm install three
+```
+</Note>
+
+## Usage
+
+```tsx
+import LiquidWave from "@/components/rareui/interactive-background/LiquidWave";
+
+export default function HeroBackground() {
+  return (
+    <div style={{ width: "100%", height: "100vh", position: "relative" }}>
+      <LiquidWave />
+      {/* Your content layered on top */}
+    </div>
+  );
+}
+```
+
+## Props
+
+<ParamField path="color1" type="string" default="orange">
+  Primary fluid color. Accepts any valid CSS color string (`"#5227FF"`, `"rgb(100,200,255)"`, named colors).
+</ParamField>
+
+<ParamField path="color2" type="string" default="orange">
+  Secondary fluid color blended into the palette gradient.
+</ParamField>
+
+<ParamField path="color3" type="string" default="orange">
+  Tertiary fluid color for a richer multi-tone gradient effect.
+</ParamField>
+
+<ParamField path="mouseForce" type="number" default="20">
+  Strength of force injected at the cursor position. Range `0`–`100`; higher values create more dramatic wave displacement.
+</ParamField>
+
+<ParamField path="cursorSize" type="number" default="100">
+  Radius of the force injection area around the cursor in simulation units.
+</ParamField>
+
+<ParamField path="isViscous" type="boolean" default="false">
+  Enables viscous fluid behavior. When `true`, a viscosity diffusion pass is applied each frame.
+</ParamField>
+
+<ParamField path="viscous" type="number" default="30">
+  Viscosity coefficient used when `isViscous` is `true`. Higher values produce thicker, slower-moving fluid.
+</ParamField>
+
+<ParamField path="iterationsViscous" type="number" default="32">
+  Number of Jacobi iterations for the viscosity solver. More iterations increase accuracy at a performance cost.
+</ParamField>
+
+<ParamField path="iterationsPoisson" type="number" default="32">
+  Number of Jacobi iterations for the pressure (Poisson) solver.
+</ParamField>
+
+<ParamField path="dt" type="number" default="0.014">
+  Simulation time step per frame. Smaller values increase stability; larger values speed up the simulation.
+</ParamField>
+
+<ParamField path="BFECC" type="boolean" default="true">
+  Enables Back and Forth Error Compensation and Correction advection for improved numerical stability and detail.
+</ParamField>
+
+<ParamField path="resolution" type="number" default="0.5">
+  Simulation resolution as a fraction of canvas size (`0.1`–`1.0`). Higher values are sharper but more GPU-intensive.
+</ParamField>
+
+<ParamField path="isBounce" type="boolean" default="false">
+  When `true`, fluid velocity reflects off the boundary walls instead of dissipating.
+</ParamField>
+
+<ParamField path="autoDemo" type="boolean" default="true">
+  Enables the autonomous movement driver that animates the fluid when the user is idle.
+</ParamField>
+
+<ParamField path="autoSpeed" type="number" default="0.5">
+  Movement speed of the autonomous demo cursor in normalized units per second.
+</ParamField>
+
+<ParamField path="autoIntensity" type="number" default="2.2">
+  Force multiplier applied to the autonomous demo movement.
+</ParamField>
+
+<ParamField path="takeoverDuration" type="number" default="0.25">
+  Duration in seconds for the smooth takeover transition when the user resumes control from auto-demo.
+</ParamField>
+
+<ParamField path="autoResumeDelay" type="number" default="3000">
+  Milliseconds of user inactivity before the autonomous demo driver resumes.
+</ParamField>
+
+<ParamField path="autoRampDuration" type="number" default="0.6">
+  Duration in seconds for the auto-demo speed ramp-up on activation.
+</ParamField>
+
+<ParamField path="style" type="React.CSSProperties">
+  Inline styles applied to the mount container `div`.
+</ParamField>
+
+<ParamField path="className" type="string">
+  Additional CSS classes applied to the container.
+</ParamField>
+
+## Examples
+
+### Custom color palette
+
+```tsx
+<LiquidWave
+  color1="#5227FF"
+  color2="#FF9FFC"
+  color3="#B19EEF"
+/>
+```
+
+### High-force interaction
+
+```tsx
+<LiquidWave
+  mouseForce={30}
+  cursorSize={150}
+/>
+```
+
+### Viscous fluid
+
+```tsx
+<LiquidWave
+  isViscous={true}
+  viscous={50}
+  iterationsViscous={64}
+/>
+```
+
+## Features
+
+<CardGroup cols={2}>
+  <Card title="Real Fluid Simulation" icon="droplets">
+    Runs advection, divergence, pressure, and optional viscosity passes on the GPU every frame using Three.js WebGL.
+  </Card>
+  <Card title="Multi-Color Gradients" icon="palette">
+    Three color stops are sampled from a dynamically generated palette texture for fluid color rendering.
+  </Card>
+  <Card title="Auto-Demo Mode" icon="play">
+    An autonomous cursor driver keeps the fluid animated when the user is idle, resuming gracefully on interaction.
+  </Card>
+  <Card title="Visibility Optimization" icon="eye">
+    Uses `IntersectionObserver` and `document.visibilitychange` to pause the render loop when off-screen or hidden.
+  </Card>
+</CardGroup>

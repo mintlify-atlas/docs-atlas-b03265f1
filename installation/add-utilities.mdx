@@ -1,0 +1,152 @@
+---
+title: Add Utilities
+description: Install the dependencies and utility functions used by all RareUI components — framer-motion, clsx, tailwind-merge, and the cn() helper.
+---
+
+RareUI components share a small set of common dependencies. If you used `npx rareui@latest init` followed by `npx rareui@latest add`, these are installed automatically. If you are setting up manually, follow the steps below.
+
+## Install dependencies
+
+<Steps>
+  <Step title="Install class merging utilities">
+    `clsx` and `tailwind-merge` are used by every RareUI component for conditional and conflict-free class name composition.
+
+    <CodeGroup>
+
+    ```bash npm
+    npm install clsx tailwind-merge
+    ```
+
+    ```bash pnpm
+    pnpm add clsx tailwind-merge
+    ```
+
+    ```bash yarn
+    yarn add clsx tailwind-merge
+    ```
+
+    ```bash bun
+    bun add clsx tailwind-merge
+    ```
+
+    </CodeGroup>
+  </Step>
+
+  <Step title="Install Framer Motion">
+    Framer Motion powers all RareUI animations. Install the `motion` package (the modern name for `framer-motion` v12+).
+
+    <CodeGroup>
+
+    ```bash npm
+    npm install framer-motion
+    ```
+
+    ```bash pnpm
+    pnpm add framer-motion
+    ```
+
+    ```bash yarn
+    yarn add framer-motion
+    ```
+
+    ```bash bun
+    bun add framer-motion
+    ```
+
+    </CodeGroup>
+
+    <Note>
+      If you are using React 19 and see peer dependency warnings, add an `overrides` block to your `package.json` (see below). This is a temporary workaround until the upstream package resolves React 19 support.
+    </Note>
+
+    ```json title="package.json"
+    {
+      "overrides": {
+        "framer-motion": {
+          "react": "^19.0.0",
+          "react-dom": "^19.0.0"
+        }
+      }
+    }
+    ```
+  </Step>
+
+  <Step title="Install icon library">
+    Some RareUI components use `lucide-react` for icons.
+
+    <CodeGroup>
+
+    ```bash npm
+    npm install lucide-react
+    ```
+
+    ```bash pnpm
+    pnpm add lucide-react
+    ```
+
+    ```bash yarn
+    yarn add lucide-react
+    ```
+
+    ```bash bun
+    bun add lucide-react
+    ```
+
+    </CodeGroup>
+  </Step>
+
+  <Step title="Create the utility file">
+    Create `lib/utils.ts` with the `cn()` function. This is imported by every RareUI component.
+
+    ```ts title="lib/utils.ts"
+    import { type ClassValue, clsx } from "clsx"
+    import { twMerge } from "tailwind-merge"
+
+    export function cn(...inputs: ClassValue[]) {
+      return twMerge(clsx(inputs))
+    }
+    ```
+
+    `cn()` accepts any number of class values, filters falsy values with `clsx`, and resolves Tailwind class conflicts with `tailwind-merge`. For example:
+
+    ```ts
+    cn("px-4 py-2", isLarge && "px-8", "bg-blue-500 bg-red-500")
+    // → "py-2 px-8 bg-red-500"  (conflicts resolved, falsy values removed)
+    ```
+  </Step>
+</Steps>
+
+## Path alias configuration
+
+RareUI components import from `@/lib/utils` using the `@/*` alias. Verify your `tsconfig.json` has this configured:
+
+```json title="tsconfig.json"
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./*"]
+    }
+  }
+}
+```
+
+If you created your project with `create-next-app`, this alias is already present. The `next.config.ts` file also picks it up automatically.
+
+## Full dependency summary
+
+| Package | Purpose | Required |
+| :--- | :--- | :--- |
+| `framer-motion` | Component animations | Yes |
+| `clsx` | Conditional class names | Yes |
+| `tailwind-merge` | Tailwind class conflict resolution | Yes |
+| `lucide-react` | Icons used in some components | Some components |
+
+<Tip>
+  If you use the CLI (`npx rareui@latest add`), required dependencies for each component are installed automatically. You only need to install them manually when copying component code by hand.
+</Tip>
+
+## Next steps
+
+- [CLI reference](/installation/cli) — add components with a single command
+- [Quickstart](/quickstart) — add your first component end to end

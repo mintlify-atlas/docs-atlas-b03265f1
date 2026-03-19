@@ -1,0 +1,219 @@
+---
+title: CLI
+description: Full reference for the RareUI CLI — init, add, and diff commands with all options, package manager variants, and FAQ.
+---
+
+The RareUI CLI (`rareui`) is the fastest way to add components to your project. It fetches component source from the registry at `rareui.in/r`, writes files to your `components/rareui/` directory, and installs any required npm dependencies automatically.
+
+<Note>
+  The CLI requires **Node.js 18** or later. It is published to npm as [`rareui`](https://www.npmjs.com/package/rareui) (version 0.1.6+).
+</Note>
+
+## Commands
+
+### init
+
+Initializes RareUI in your project. Creates a `components.json` configuration file that stores your project's path aliases, Tailwind config location, and registry URL.
+
+<CodeGroup>
+
+```bash npm
+npx rareui@latest init
+```
+
+```bash pnpm
+pnpm dlx rareui@latest init
+```
+
+```bash yarn
+yarn dlx rareui@latest init
+```
+
+```bash bun
+bunx rareui@latest init
+```
+
+</CodeGroup>
+
+**What `init` does:**
+
+- Creates a `components.json` file at your project root
+- Sets component path aliases (`@/components`, `@/lib/utils`, etc.)
+- Configures the RareUI registry URL
+- Prompts for confirmation if `components.json` already exists
+
+The generated `components.json` looks like this:
+
+```json title="components.json"
+{
+  "style": "new-york",
+  "rsc": true,
+  "tsx": true,
+  "tailwind": {
+    "css": "app/globals.css",
+    "baseColor": "neutral",
+    "cssVariables": true,
+    "prefix": ""
+  },
+  "iconLibrary": "lucide",
+  "aliases": {
+    "components": "@/components",
+    "utils": "@/lib/utils",
+    "ui": "@/components/ui",
+    "lib": "@/lib",
+    "hooks": "@/hooks"
+  }
+}
+```
+
+---
+
+### add
+
+Adds one or more components to your project. Downloads source files from the registry and installs npm dependencies.
+
+<CodeGroup>
+
+```bash npm
+npx rareui@latest add [component-name]
+```
+
+```bash pnpm
+pnpm dlx rareui@latest add [component-name]
+```
+
+```bash yarn
+yarn dlx rareui@latest add [component-name]
+```
+
+```bash bun
+bunx rareui@latest add [component-name]
+```
+
+</CodeGroup>
+
+**Examples:**
+
+```bash
+# Add a single component
+npx rareui@latest add liquid-button
+
+# Add multiple components at once
+npx rareui@latest add particle-card soft-button
+
+# Add all available components
+npx rareui@latest add .
+
+# List all available components (no argument)
+npx rareui@latest add
+```
+
+**Component naming:** Both kebab-case and PascalCase are accepted.
+
+```bash
+npx rareui@latest add liquid-button
+# same as
+npx rareui@latest add LiquidButton
+```
+
+**What `add` does:**
+
+1. Verifies `components.json` exists (run `init` first if not)
+2. Fetches the list of available components from the registry
+3. Downloads the component source to `components/rareui/`
+4. Prompts before overwriting existing files (unless `--yes` or `--overwrite`)
+5. Installs runtime dependencies with `npm install` and `@types/*` packages as dev dependencies
+
+<Warning>
+  `add` requires `components.json` to exist. If you see an error about a missing `components.json`, run `npx rareui@latest init` first.
+</Warning>
+
+---
+
+### diff
+
+Checks installed components against the latest versions in the registry and optionally updates them.
+
+<CodeGroup>
+
+```bash npm
+npx rareui@latest diff
+```
+
+```bash pnpm
+pnpm dlx rareui@latest diff
+```
+
+```bash yarn
+yarn dlx rareui@latest diff
+```
+
+```bash bun
+bunx rareui@latest diff
+```
+
+</CodeGroup>
+
+**Examples:**
+
+```bash
+# Check all installed components
+npx rareui@latest diff
+
+# Check a specific component
+npx rareui@latest diff liquid-button
+
+# Update all components without a confirmation prompt
+npx rareui@latest diff --yes
+```
+
+**What `diff` does:**
+
+1. Scans `components/rareui/` for installed `.tsx` and `.ts` files
+2. Fetches the latest versions from the registry
+3. Compares local files line-by-line and reports additions, deletions, and modifications
+4. Prompts to update components that have changed
+5. Re-installs dependencies after updating
+
+---
+
+## Options
+
+Options are shared across commands where applicable.
+
+| Option | Commands | Description |
+| :--- | :--- | :--- |
+| `-y`, `--yes` | `add`, `diff` | Skip all confirmation prompts. |
+| `-o`, `--overwrite` | `add` | Overwrite existing component files without prompting. |
+| `-c`, `--cwd <path>` | `add`, `diff` | Set the working directory (default: current directory). |
+| `-p`, `--path <path>` | `add` | Override the installation path for component files. |
+| `-h`, `--help` | all | Display help for the command. |
+| `-V`, `--version` | root | Print the CLI version. |
+
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="Does the CLI work with frameworks other than Next.js?">
+    Currently the CLI is optimized for React projects using Next.js and Tailwind CSS. The component registry and file paths assume an App Router project structure. Support for other frameworks (Vite, Remix, etc.) is planned.
+  </Accordion>
+
+  <Accordion title="Can I use RareUI without the CLI?">
+    Yes. The CLI is purely for convenience. Every component's source code is available in the documentation — copy it, paste it into your project, and install any listed dependencies manually. See the [Quickstart](/quickstart) for a manual walkthrough.
+  </Accordion>
+
+  <Accordion title="Where are components installed?">
+    Components are written to `components/rareui/` relative to your working directory (or the path passed with `--path`). For example, `liquid-button` is installed as `components/rareui/LiquidButton.tsx`.
+  </Accordion>
+
+  <Accordion title="What happens if a component file already exists?">
+    The CLI checks for existing files before writing. If conflicts are found, it prompts you to confirm before overwriting. Use `--overwrite` to skip the prompt and always overwrite, or `--yes` to accept all prompts automatically.
+  </Accordion>
+
+  <Accordion title="How does diff detect changes?">
+    `diff` does a line-by-line comparison between your local file and the registry version. It reports the number of additions, deletions, and changed lines per file. If the files are identical, no update is offered.
+  </Accordion>
+
+  <Accordion title="Why does the CLI use npm to install dependencies even if I use pnpm or yarn?">
+    The current version of the `add` command uses `npm install` internally for dependency installation. If you use a different package manager, you can install dependencies manually after running `add`. This behavior will be improved in a future release.
+  </Accordion>
+</AccordionGroup>

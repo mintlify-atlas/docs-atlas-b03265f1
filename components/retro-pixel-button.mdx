@@ -1,0 +1,123 @@
+---
+title: "Retro Pixel Button"
+description: "A retro-styled animated button with a spring-driven sliding pixel block, rotating pixel arrow, and text morph effect."
+---
+
+## Overview
+
+Retro Pixel Button features a colored block that spring-animates from a compact icon to full-width on hover, pushing the text label across the button. A pixelated arrow SVG rotates 180° during the transition while the text briefly blurs for a subtle glitch effect.
+
+## Installation
+
+<CodeGroup>
+
+```bash npm
+npx rareui@latest add retro-pixel-button
+```
+
+```bash pnpm
+pnpm dlx rareui@latest add retro-pixel-button
+```
+
+```bash yarn
+yarn dlx rareui@latest add retro-pixel-button
+```
+
+```bash bun
+bunx rareui@latest add retro-pixel-button
+```
+
+</CodeGroup>
+
+Or copy the component source manually into `components/rareui/retro-pixel-button.tsx`.
+
+## Usage
+
+```tsx
+import RetroPixelButton from '@/components/rareui/retro-pixel-button';
+
+export default function App() {
+  return (
+    <RetroPixelButton onClick={() => alert('Clicked!')}>
+      CLICK ME
+    </RetroPixelButton>
+  );
+}
+```
+
+## Props
+
+<ParamField path="children" type="React.ReactNode" default="TRY FOR FREE">
+  The button label text.
+</ParamField>
+
+<ParamField path="pixelColor" type="string" default="orange">
+  Background color of the sliding pixel block. Accepts any valid CSS color value.
+</ParamField>
+
+<ParamField path="baseColor" type="string">
+  Optional CSS color value to override the button's background. Defaults to the theme background color.
+</ParamField>
+
+<ParamField path="textColor" type="string">
+  Optional CSS color value to override the label text color before hover.
+</ParamField>
+
+<ParamField path="className" type="string">
+  Additional Tailwind classes applied to the `motion.button` element.
+</ParamField>
+
+<ParamField path="...props" type="React.ButtonHTMLAttributes<HTMLButtonElement>">
+  Any standard HTML button attribute — `onClick`, `disabled`, `type`, etc.
+</ParamField>
+
+## Examples
+
+### Default
+
+```tsx
+<RetroPixelButton>TRY FOR FREE</RetroPixelButton>
+```
+
+### Custom pixel color
+
+```tsx
+<RetroPixelButton pixelColor="#7c3aed">
+  UPGRADE NOW
+</RetroPixelButton>
+```
+
+### Fully custom colors
+
+```tsx
+<RetroPixelButton
+  pixelColor="#16a34a"
+  baseColor="#f0fdf4"
+  textColor="#15803d"
+>
+  GET ACCESS
+</RetroPixelButton>
+```
+
+## Features
+
+<CardGroup cols={2}>
+  <Card title="Spring-driven pixel block">
+    The colored block expands from 55px to 97% width using a Framer Motion spring (stiffness 400, damping 30).
+  </Card>
+  <Card title="Rotating pixel arrow">
+    The built-in pixelated SVG arrow rotates 180° on hover with an independent spring transition.
+  </Card>
+  <Card title="Text morph effect">
+    The label briefly blurs and shifts padding during the hover transition for a retro glitch look.
+  </Card>
+  <Card title="Monospace aesthetic">
+    `font-mono` typography reinforces the pixel/retro visual identity.
+  </Card>
+  <Card title="Customizable colors">
+    Pixel block, button background, and text color are all independently configurable.
+  </Card>
+  <Card title="Tap feedback">
+    `whileTap={{ scale: 0.98 }}` provides physical press confirmation on both mouse and touch.
+  </Card>
+</CardGroup>

@@ -1,0 +1,110 @@
+---
+title: "Premium Profile Card"
+description: "A high-end, self-contained profile card with 3D mouse-tracking tilt, a flip animation to reveal contact details, and a spinning gradient border."
+---
+
+## Overview
+
+Premium Profile Card delivers a physical-feeling business card experience in the browser. Mouse movement drives a real-time 3D tilt, clicking flips the card to a dark back face that lists skills and contact information, and a conic-gradient border spins into view on hover.
+
+## Installation
+
+<CodeGroup>
+
+```bash npm
+npx rareui@latest add premium-profile-card
+```
+
+```bash pnpm
+pnpm dlx rareui@latest add premium-profile-card
+```
+
+```bash yarn
+yarn dlx rareui@latest add premium-profile-card
+```
+
+```bash bun
+bunx rareui@latest add premium-profile-card
+```
+
+</CodeGroup>
+
+Or copy the component manually from `components/rareui/premiumProfileCard.tsx` into your project.
+
+## Usage
+
+```tsx
+import PremiumProfileCard from '@/components/rareui/premiumProfileCard';
+
+export default function App() {
+  return <PremiumProfileCard />;
+}
+```
+
+<Note>
+  This component is self-contained with all profile content embedded directly in the source. After installation, edit the image URL, name, location, skills, and contact details inside the file.
+</Note>
+
+## Props
+
+This component currently does not accept external props. All content is configured by editing the component source directly after installation.
+
+<ParamField path="—" type="—">
+  No props. Customize the card by modifying the component file: replace the profile image, name, role, location, skill list, and contact rows with your own data.
+</ParamField>
+
+## Examples
+
+### Default card
+
+```tsx
+<PremiumProfileCard />
+```
+
+### Adjusting tilt sensitivity
+
+Edit the `friction` and `maxRotation` constants inside the component to tune the 3D effect:
+
+```tsx
+// Inside premiumProfileCard.tsx
+const friction = 1 / 32;  // Lower value = more sensitive to mouse movement
+const maxRotation = 10;   // Maximum degrees of rotation in any direction
+```
+
+### Customizing card colors
+
+The component uses hardcoded Tailwind classes. Change the following values to match your brand:
+
+```tsx
+// Front face background
+bg-[#FDFCF8] dark:bg-[#0d0d0d]
+
+// Border colors
+border-stone-200 dark:border-stone-700
+
+// Back face background
+bg-[#0a0a0a] dark:bg-black
+```
+
+## Features
+
+<CardGroup cols={2}>
+  <Card title="3D Tilt Effect">
+    Real-time mouse-tracking rotates the card on both axes, clamped to a configurable maximum angle.
+  </Card>
+  <Card title="Flip Animation">
+    Click the card to flip it 180° and reveal skills, contact information, and a signature on the dark back face.
+  </Card>
+  <Card title="Spinning Gradient Border">
+    A conic-gradient border animates around the card edge on hover using a pure CSS keyframe.
+  </Card>
+  <Card title="Sheen Overlay">
+    A subtle light sheen follows mouse rotation angle using `mix-blend-soft-light` for a premium feel.
+  </Card>
+  <Card title="Dark Mode">
+    All colors automatically adapt between light and dark themes using Tailwind dark variants.
+  </Card>
+  <Card title="Self-Contained">
+    No global CSS or external icon library configuration required beyond the lucide-react dependency.
+  </Card>
+</CardGroup>

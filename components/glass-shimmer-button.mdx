@@ -1,0 +1,114 @@
+---
+title: "Glass Shimmer Button"
+description: "A glassmorphism button with a continuous shimmer sweep animation and hover scale effects."
+---
+
+## Overview
+
+Glass Shimmer Button layers a frosted-glass backdrop with an infinitely looping shimmer streak and static gloss edge highlights to create a premium translucent appearance. It extends the native `<button>` element, forwarding all HTML button attributes.
+
+## Installation
+
+<CodeGroup>
+
+```bash npm
+npx rareui@latest add glass-shimmer-button
+```
+
+```bash pnpm
+pnpm dlx rareui@latest add glass-shimmer-button
+```
+
+```bash yarn
+yarn dlx rareui@latest add glass-shimmer-button
+```
+
+```bash bun
+bunx rareui@latest add glass-shimmer-button
+```
+
+</CodeGroup>
+
+Or copy the component source manually into `components/rareui/glass-shimmer-button.tsx`.
+
+## Usage
+
+```tsx
+import { GlassShimmerButton } from '@/components/rareui/glass-shimmer-button';
+
+export default function App() {
+  return (
+    <GlassShimmerButton onClick={() => alert('Clicked!')}>
+      Click Me
+    </GlassShimmerButton>
+  );
+}
+```
+
+<Note>
+  This component uses a self-contained `<style jsx>` block for the `glass-shimmer` keyframe animation, so no global CSS setup is required.
+</Note>
+
+## Props
+
+<ParamField path="children" type="React.ReactNode">
+  The content rendered inside the button label.
+</ParamField>
+
+<ParamField path="className" type="string">
+  Additional Tailwind classes merged with the default button styles via `cn`.
+</ParamField>
+
+<ParamField path="...props" type="React.ButtonHTMLAttributes<HTMLButtonElement>">
+  Any standard HTML button attribute — `onClick`, `disabled`, `type`, `aria-*`, etc.
+</ParamField>
+
+## Examples
+
+### Default usage
+
+```tsx
+<GlassShimmerButton>Get Started</GlassShimmerButton>
+```
+
+### With click handler and disabled state
+
+```tsx
+<GlassShimmerButton
+  onClick={() => console.log('clicked')}
+  disabled={isLoading}
+>
+  {isLoading ? 'Loading…' : 'Submit'}
+</GlassShimmerButton>
+```
+
+### Extended with custom class
+
+```tsx
+<GlassShimmerButton className="w-full">
+  Full Width
+</GlassShimmerButton>
+```
+
+## Features
+
+<CardGroup cols={2}>
+  <Card title="Continuous shimmer animation">
+    A `glass-shimmer` keyframe sweeps a white gradient across the button on a 2.5-second infinite loop.
+  </Card>
+  <Card title="Glassmorphism design">
+    `backdrop-blur-md` and semi-transparent backgrounds deliver a premium frosted-glass aesthetic.
+  </Card>
+  <Card title="Hover and active states">
+    Scales up 5% on hover and down to 95% on press for satisfying tactile feedback.
+  </Card>
+  <Card title="Static gloss edges">
+    1px gradient lines at the top and bottom borders simulate a physical glass edge highlight.
+  </Card>
+  <Card title="Dark mode support">
+    Background and text opacities are tuned independently for light and dark themes.
+  </Card>
+  <Card title="Self-contained styles">
+    Keyframe animation is scoped inline — no global stylesheet changes needed.
+  </Card>
+</CardGroup>

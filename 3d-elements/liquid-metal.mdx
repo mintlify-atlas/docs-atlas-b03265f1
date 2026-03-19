@@ -1,0 +1,140 @@
+---
+title: "Liquid Metal"
+description: "A WebGL2 shader-based component that renders text or images with a flowing liquid metal effect using GLSL fragment shaders."
+---
+
+## Overview
+
+`LiquidMetal` compiles custom GLSL fragment shaders on a WebGL2 canvas to produce a chromatic, metallic fluid animation. It processes your text or image through a Poisson-based edge detection pipeline, then drives a real-time animated stripe pattern with chromatic dispersion, noise-based liquification, and bulge distortion.
+
+<Warning>
+Requires **WebGL2** support. Verify browser compatibility before deploying to production. All modern browsers (Chrome 56+, Firefox 51+, Safari 15+) support WebGL2.
+</Warning>
+
+## Installation
+
+<CodeGroup>
+
+```bash npm
+npx rareui@latest add liquid-metal
+```
+
+```bash pnpm
+pnpm dlx rareui@latest add liquid-metal
+```
+
+```bash yarn
+yarn dlx rareui@latest add liquid-metal
+```
+
+```bash bun
+bunx rareui@latest add liquid-metal
+```
+
+</CodeGroup>
+
+## Usage
+
+```tsx
+import LiquidMetal from "@/components/rareui/LiquidMetal";
+
+export default function Hero() {
+  return (
+    <div className="w-full h-[600px]">
+      <LiquidMetal text="RareUI" />
+    </div>
+  );
+}
+```
+
+<Note>
+The component fills its parent container (`w-full h-full`). Always wrap it in a sized container.
+</Note>
+
+## Props
+
+<ParamField path="text" type="string" default="RareUI">
+  Text to render with the liquid metal effect. The text is rasterized into an SVG, converted to a grayscale edge map via Poisson solving, and uploaded as a WebGL texture.
+</ParamField>
+
+<ParamField path="imageSource" type="string">
+  Optional URL of an image to liquefy instead of text. The image is fetched, processed through the same edge-detection pipeline as text, and used as the shader input texture.
+</ParamField>
+
+<ParamField path="speed" type="number" default="0.3">
+  Animation speed multiplier applied to the time uniform driving the stripe pattern movement. Higher values animate faster.
+</ParamField>
+
+<ParamField path="dispersion" type="number" default="0.005">
+  Chromatic aberration/refraction amount. Controls how much the red and blue channels separate from green, creating a prismatic fringe effect. Mapped to the `u_refraction` shader uniform.
+</ParamField>
+
+<ParamField path="edge" type="number" default="0.5">
+  Edge sharpness of the shape mask. Higher values produce crisper, more defined edges; lower values create a softer bleed. Mapped to the `u_edge` shader uniform.
+</ParamField>
+
+<ParamField path="patternBlur" type="number" default="0.005">
+  Blur amount for the metallic stripe pattern transitions. Increase for a softer, more diffuse metallic look. Mapped to the `u_patternBlur` shader uniform.
+</ParamField>
+
+<ParamField path="liquify" type="number" default="0.08">
+  Intensity of the Simplex noise-based liquid distortion applied to the edges. Higher values make the shape boundary appear to flow and ripple. Mapped to the `u_liquid` shader uniform.
+</ParamField>
+
+<ParamField path="patternScale" type="number" default="2">
+  Scale of the repeating metallic stripe cycle. Lower values produce narrower, more detailed stripes; higher values produce broader bands. Mapped to the `u_patternScale` shader uniform.
+</ParamField>
+
+## Examples
+
+### Basic text effect
+
+```tsx
+<div className="w-full h-[600px]">
+  <LiquidMetal text="Chrome" />
+</div>
+```
+
+### High-dispersion, fast animation
+
+```tsx
+<div className="w-full h-[600px]">
+  <LiquidMetal
+    text="Metal"
+    speed={0.8}
+    dispersion={0.02}
+    edge={0.3}
+    patternScale={3}
+  />
+</div>
+```
+
+### Image liquification
+
+```tsx
+<div className="w-full h-[400px]">
+  <LiquidMetal
+    imageSource="/logo.png"
+    speed={0.4}
+    liquify={0.15}
+    edge={0.45}
+  />
+</div>
+```
+
+## Features
+
+<CardGroup cols={2}>
+  <Card title="WebGL2 Shaders" icon="cpu">
+    Custom GLSL300 fragment shaders run entirely on the GPU, enabling smooth 60fps animation with no JavaScript per-frame work.
+  </Card>
+  <Card title="Poisson Edge Detection" icon="scan">
+    Text and images are processed through a 300-iteration Poisson solver to generate a precise distance-field edge map for the shader.
+  </Card>
+  <Card title="Chromatic Dispersion" icon="eye">
+    Separate displacement is applied to the red and blue color channels to create realistic chromatic aberration.
+  </Card>
+  <Card title="Simplex Noise Liquification" icon="waves">
+    A GLSL Simplex noise function drives the `u_liquid` uniform, animating the boundary of shapes with organic, fluid motion.
+  </Card>
+</CardGroup>

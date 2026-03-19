@@ -1,0 +1,150 @@
+---
+title: "Particle Card"
+description: "An interactive profile card that explodes into animated particles on hover, revealing detailed bio and tags."
+---
+
+## Overview
+
+Particle Card splits a profile photo into a configurable grid of tiles that scatter outward on hover using a center-based explosion algorithm. The reveal exposes a bio, skill tags, and a call-to-action, then the particles reassemble when focus is lost.
+
+## Installation
+
+<CodeGroup>
+
+```bash npm
+npx rareui@latest add particle-card
+```
+
+```bash pnpm
+pnpm dlx rareui@latest add particle-card
+```
+
+```bash yarn
+yarn dlx rareui@latest add particle-card
+```
+
+```bash bun
+bunx rareui@latest add particle-card
+```
+
+</CodeGroup>
+
+Or copy the component manually from `components/rareui/ParticleCard.tsx` into your project.
+
+## Usage
+
+```tsx
+import ParticleCard from '@/components/rareui/ParticleCard';
+
+export default function App() {
+  return (
+    <ParticleCard
+      name="Sam Jenkins"
+      role="Product Designer"
+      bio="Passionate about creating intuitive and beautiful user experiences."
+      img="https://images.unsplash.com/photo-1676377630534-a08fd9778701"
+      tags={['UI/UX', 'React', 'Motion', 'Figma']}
+    />
+  );
+}
+```
+
+## Props
+
+<ParamField path="name" type="string" default="'Sam Jenkins'">
+  Name displayed on the card front and revealed in the back layer.
+</ParamField>
+
+<ParamField path="role" type="string" default="'Product Designer'">
+  Role or job title shown beneath the name on both the front overlay and revealed layer.
+</ParamField>
+
+<ParamField path="bio" type="string" default="'Passionate about creating intuitive...'">
+  Biography text shown in the card's background layer after the particle explosion.
+</ParamField>
+
+<ParamField path="img" type="string" default="Unsplash portrait URL">
+  URL of the profile image used for both the static display and the particle tiles.
+</ParamField>
+
+<ParamField path="tags" type="string[]" default="['UI/UX', 'React', 'Motion', 'Figma']">
+  Array of skill or category labels rendered as pill badges in the revealed layer.
+</ParamField>
+
+<ParamField path="cols" type="number" default="20">
+  Number of horizontal particle columns. Higher values produce smaller, more numerous tiles.
+</ParamField>
+
+<ParamField path="rows" type="number" default="24">
+  Number of vertical particle rows. Increasing both `cols` and `rows` creates a denser, finer explosion.
+</ParamField>
+
+## Examples
+
+### Custom profile content
+
+```tsx
+<ParticleCard
+  name="Jane Doe"
+  role="Senior Developer"
+  bio="Full-stack engineer with 8+ years building scalable web applications and distributed systems."
+  img="https://images.unsplash.com/photo-1494790108377-be9c29b29330"
+  tags={['React', 'Node.js', 'TypeScript', 'PostgreSQL']}
+/>
+```
+
+### High-density particle grid
+
+```tsx
+<ParticleCard
+  cols={30}
+  rows={36}
+/>
+```
+
+<Tip>
+  Higher `cols`/`rows` values create a finer mosaic effect but increase the number of DOM nodes. Values above 40×48 may affect performance on low-end devices.
+</Tip>
+
+### Team member grid
+
+```tsx
+const team = [
+  { name: 'Alice Chen', role: 'CEO', tags: ['Leadership', 'Strategy'] },
+  { name: 'Bob Smith', role: 'CTO', tags: ['Engineering', 'Architecture'] },
+  { name: 'Carol Wang', role: 'Designer', tags: ['UI/UX', 'Branding'] },
+];
+
+export default function TeamGrid() {
+  return (
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+      {team.map((member) => (
+        <ParticleCard key={member.name} {...member} />
+      ))}
+    </div>
+  );
+}
+```
+
+## Features
+
+<CardGroup cols={2}>
+  <Card title="Particle Explosion Effect">
+    Image breaks into animated tiles that scatter outward from the center on hover.
+  </Card>
+  <Card title="Spring Animations">
+    Powered by Framer Motion with per-particle delays for a natural ripple effect.
+  </Card>
+  <Card title="Dual-Sided Content">
+    Front shows the photo overlay; back reveals bio, tags, and a CTA button.
+  </Card>
+  <Card title="Configurable Density">
+    Control particle size and count independently via `cols` and `rows` props.
+  </Card>
+  <Card title="Mobile Support">
+    Tap-to-toggle interaction on touch devices; hover interaction on desktop.
+  </Card>
+  <Card title="Performance Optimized">
+    Particle metadata is computed once with `useMemo` and reused across renders.
+  </Card>
+</CardGroup>

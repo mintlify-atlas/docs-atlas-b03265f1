@@ -1,0 +1,97 @@
+---
+title: "Premium Button"
+description: "A bold gradient button with an animated lime-green background shift and a built-in crown SVG icon."
+---
+
+## Overview
+
+Premium Button pairs a high-contrast lime-yellow multi-stop gradient with a 300ms `bg-position` hover transition to create a shimmering color shift. A built-in SVG crown icon reinforces the premium visual identity without any external icon dependency.
+
+## Installation
+
+<CodeGroup>
+
+```bash npm
+npx rareui@latest add premium-button
+```
+
+```bash pnpm
+pnpm dlx rareui@latest add premium-button
+```
+
+```bash yarn
+yarn dlx rareui@latest add premium-button
+```
+
+```bash bun
+bunx rareui@latest add premium-button
+```
+
+</CodeGroup>
+
+Or copy the component source manually into `components/rareui/premium-button.tsx`.
+
+## Usage
+
+```tsx
+import { PremiumButton } from '@/components/rareui/premium-button';
+
+export default function App() {
+  return (
+    <PremiumButton />
+  );
+}
+```
+
+<Note>
+  This component does not accept props. To customize colors, text, or icon, edit the component source directly after installation.
+</Note>
+
+## Props
+
+This component does not expose props. All styling is baked into the Tailwind class list. Modify the source file after installation to adjust the gradient stops, label text, or icon.
+
+## Examples
+
+### Basic usage
+
+```tsx
+import { PremiumButton } from '@/components/rareui/premium-button';
+
+<PremiumButton />
+```
+
+### Inside a flex container
+
+```tsx
+<div className="flex items-center justify-center gap-4">
+  <PremiumButton />
+</div>
+```
+
+### Wrapping in a link
+
+```tsx
+import Link from 'next/link';
+
+<Link href="/upgrade">
+  <PremiumButton />
+</Link>
+```
+
+## Features
+
+<CardGroup cols={2}>
+  <Card title="Animated gradient background">
+    An 8-stop lime-yellow gradient shifts from `bg-left` to `bg-right` on hover via background-position transition.
+  </Card>
+  <Card title="Built-in crown icon">
+    An inline SVG crown mark is included — no external icon library required.
+  </Card>
+  <Card title="Text and box shadows">
+    Lime-tinted `text-shadow` and a diffused `box-shadow` add perceived depth.
+  </Card>
+  <Card title="Smooth transitions">
+    Background and color properties transition at 300ms `ease-out` for a polished feel.
+  </Card>
+</CardGroup>

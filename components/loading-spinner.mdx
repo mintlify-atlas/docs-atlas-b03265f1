@@ -1,0 +1,105 @@
+---
+title: "Loading Spinner"
+description: "A minimal animated spinner with a sweeping arc and a shimmer loading text, built with Framer Motion SVG."
+---
+
+## Overview
+
+Loading Spinner pairs a continuously rotating SVG arc with a gradient-shimmer text label. The arc segment uses a blurred duplicate layer for a soft glow trail, and the text shimmer is driven by an animated `backgroundPosition` — no keyframes or external CSS required.
+
+## Installation
+
+<CodeGroup>
+
+```bash npm
+npx rareui@latest add loading-spinner
+```
+
+```bash pnpm
+pnpm dlx rareui@latest add loading-spinner
+```
+
+```bash yarn
+yarn dlx rareui@latest add loading-spinner
+```
+
+```bash bun
+bunx rareui@latest add loading-spinner
+```
+
+</CodeGroup>
+
+Or copy the component manually from `components/rareui/LoadingSpinner.tsx` into your project.
+
+## Usage
+
+```tsx
+import LoadingSpinner from '@/components/rareui/LoadingSpinner';
+
+export default function MyComponent() {
+  return (
+    <div className="flex items-center justify-center h-screen">
+      <LoadingSpinner />
+    </div>
+  );
+}
+```
+
+## Props
+
+<ParamField path="className" type="string">
+  Additional Tailwind or CSS classes applied to the outer container `<div>`. Use this to adjust spacing, scale the spinner, or override colors.
+</ParamField>
+
+## Examples
+
+### Default spinner
+
+```tsx
+<LoadingSpinner />
+```
+
+### Larger size via className
+
+```tsx
+<LoadingSpinner className="scale-150" />
+```
+
+### Centered full-screen overlay
+
+```tsx
+export default function LoadingScreen() {
+  return (
+    <div className="fixed inset-0 flex items-center justify-center bg-background/80 backdrop-blur-sm z-50">
+      <LoadingSpinner />
+    </div>
+  );
+}
+```
+
+<Tip>
+  The spinner's arc color is driven by Tailwind's `text-black dark:text-white` utility on the SVG element. Override it with a custom `className` like `text-blue-500` if you need a branded color.
+</Tip>
+
+## Features
+
+<CardGroup cols={2}>
+  <Card title="SVG Arc Spinner">
+    A crisp, scalable vector arc rotates continuously at a 1-second linear duration.
+  </Card>
+  <Card title="Glow Trail Effect">
+    A blurred duplicate of the arc arc layer sits behind the main stroke, creating a soft motion glow.
+  </Card>
+  <Card title="Shimmer Text">
+    The "Loading..." label uses an animated gradient background-position sweep for a polished shimmer.
+  </Card>
+  <Card title="Dark Mode">
+    Track ring, arc, and text colors all adapt automatically using Tailwind dark mode variants.
+  </Card>
+  <Card title="Zero Configuration">
+    Works out of the box with a single import — no props required to get a fully animated spinner.
+  </Card>
+  <Card title="Lightweight">
+    No additional dependencies beyond Framer Motion, which is already required by RareUI.
+  </Card>
+</CardGroup>

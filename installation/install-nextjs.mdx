@@ -1,0 +1,207 @@
+---
+title: Install Next.js
+description: Create a new Next.js project with TypeScript, Tailwind CSS, and the App Router — the recommended foundation for RareUI.
+---
+
+RareUI components are designed for React projects using the App Router. This page covers everything you need to get a Next.js project ready.
+
+## System requirements
+
+Before you begin, ensure your environment meets these requirements:
+
+- **Node.js 18.17** or later
+- macOS, Windows (including WSL), or Linux
+
+## Quick setup
+
+The fastest path is the automatic setup tool, which scaffolds everything in one command.
+
+<Steps>
+  <Step title="Create a new project">
+    Run the following command to create a new Next.js app. The `--yes` flag accepts all recommended defaults: TypeScript, Tailwind CSS, ESLint, App Router, Turbopack, and the `@/*` import alias.
+
+    <CodeGroup>
+
+    ```bash npm
+    npx create-next-app@latest my-app --yes
+    ```
+
+    ```bash pnpm
+    pnpm create next-app my-app --yes
+    ```
+
+    ```bash yarn
+    yarn create next-app my-app --yes
+    ```
+
+    ```bash bun
+    bun create next-app my-app --yes
+    ```
+
+    </CodeGroup>
+
+    <Tip>
+      The `--yes` flag uses saved preferences or Next.js defaults. If you want to choose settings interactively, omit the flag and answer the prompts — just make sure to select **Tailwind CSS: Yes**.
+    </Tip>
+  </Step>
+
+  <Step title="Start the development server">
+    Navigate into the project directory and start the dev server.
+
+    ```bash
+    cd my-app
+    npm run dev
+    ```
+  </Step>
+
+  <Step title="Open in your browser">
+    Visit `http://localhost:3000` to confirm the app is running. You should see the Next.js default welcome page.
+  </Step>
+</Steps>
+
+## Interactive setup
+
+If you prefer to configure each option manually, run the command without `--yes`:
+
+<Steps>
+  <Step title="Run the command">
+    <CodeGroup>
+
+    ```bash npm
+    npx create-next-app@latest
+    ```
+
+    ```bash pnpm
+    pnpm create next-app
+    ```
+
+    ```bash yarn
+    yarn create next-app
+    ```
+
+    ```bash bun
+    bun create next-app
+    ```
+
+    </CodeGroup>
+  </Step>
+
+  <Step title="Answer the prompts">
+    You'll be asked a series of questions. For RareUI compatibility, select these options:
+
+    ```txt
+    What is your project named? my-app
+    Would you like to use TypeScript? Yes
+    Would you like to use ESLint? Yes
+    Would you like to use Tailwind CSS? Yes
+    Would you like your code inside a `src/` directory? No
+    Would you like to use App Router? Yes
+    Would you like to use Turbopack for next dev? Yes
+    Would you like to customize the import alias? No
+    ```
+
+    <Warning>
+      Select **Tailwind CSS: Yes**. RareUI components rely on Tailwind utility classes and will not render correctly without it.
+    </Warning>
+  </Step>
+</Steps>
+
+## Manual installation
+
+If you need to add Next.js to an existing project, follow these steps.
+
+<Steps>
+  <Step title="Install packages">
+    <CodeGroup>
+
+    ```bash npm
+    npm install next@latest react@latest react-dom@latest
+    ```
+
+    ```bash pnpm
+    pnpm add next@latest react@latest react-dom@latest
+    ```
+
+    ```bash yarn
+    yarn add next@latest react@latest react-dom@latest
+    ```
+
+    ```bash bun
+    bun add next@latest react@latest react-dom@latest
+    ```
+
+    </CodeGroup>
+  </Step>
+
+  <Step title="Add scripts to package.json">
+    ```json title="package.json"
+    {
+      "scripts": {
+        "dev": "next dev",
+        "build": "next build",
+        "start": "next start",
+        "lint": "eslint"
+      }
+    }
+    ```
+  </Step>
+
+  <Step title="Create the app directory">
+    Next.js uses file-system routing. Create an `app/` directory and add a `layout.tsx` file:
+
+    ```tsx title="app/layout.tsx"
+    export default function RootLayout({
+      children,
+    }: {
+      children: React.ReactNode
+    }) {
+      return (
+        <html lang="en">
+          <body>{children}</body>
+        </html>
+      )
+    }
+    ```
+
+    Then create a `page.tsx`:
+
+    ```tsx title="app/page.tsx"
+    export default function Page() {
+      return <h1>Hello, Next.js!</h1>
+    }
+    ```
+  </Step>
+</Steps>
+
+## TypeScript setup
+
+RareUI components are written in TypeScript. We strongly recommend using TypeScript for the best experience.
+
+<Steps>
+  <Step title="Enable TypeScript">
+    If you used `create-next-app` with TypeScript enabled (the default), you already have a `tsconfig.json`. If not, rename any `.js` file to `.tsx` and run `next dev` — Next.js automatically creates the `tsconfig.json`.
+  </Step>
+
+  <Step title="Configure path aliases">
+    Ensure your `tsconfig.json` has the `@/*` path alias configured. This is required for RareUI component imports.
+
+    ```json title="tsconfig.json"
+    {
+      "compilerOptions": {
+        "baseUrl": ".",
+        "paths": {
+          "@/*": ["./*"]
+        }
+      }
+    }
+    ```
+
+    With this alias, you can import components as `@/components/rareui/liquid-button` instead of relative paths like `../../components/rareui/liquid-button`.
+  </Step>
+</Steps>
+
+## Next steps
+
+- [Install Tailwind CSS](/installation/install-tailwind) — verify your Tailwind setup
+- [Add utilities](/installation/add-utilities) — install `framer-motion` and the `cn()` helper
+- [CLI](/installation/cli) — use the CLI to add components

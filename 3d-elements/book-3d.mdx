@@ -1,0 +1,163 @@
+---
+title: "Book 3D"
+description: "A CSS 3D interactive book component with a flipping cover, page-turning animations, and fully customizable content — powered by Framer Motion."
+---
+
+## Overview
+
+`Book3D` uses CSS `perspective` and `transformStyle: preserve-3d` combined with Framer Motion to create a realistic 3D book. Hovering opens the cover, clicking pages flips through them sequentially, and leaving the component closes the book automatically. No Three.js or WebGL required.
+
+## Installation
+
+<CodeGroup>
+
+```bash npm
+npx rareui@latest add book-3d
+```
+
+```bash pnpm
+pnpm dlx rareui@latest add book-3d
+```
+
+```bash yarn
+yarn dlx rareui@latest add book-3d
+```
+
+```bash bun
+bunx rareui@latest add book-3d
+```
+
+</CodeGroup>
+
+<Note>
+Requires `framer-motion` as a peer dependency.
+```bash
+npm install framer-motion
+```
+</Note>
+
+## Usage
+
+```tsx
+import { Book3D } from "@/components/rareui/3D elements/book-3d";
+
+export default function App() {
+  return <Book3D />;
+}
+```
+
+## Props
+
+<ParamField path="src" type="string">
+  URL of an image to use as the book cover background. If omitted, the default RareUI branding cover is shown.
+</ParamField>
+
+<ParamField path="title" type="string">
+  Title text displayed on the cover in a large serif font.
+</ParamField>
+
+<ParamField path="subtitle" type="string">
+  Subtitle text displayed below the title on the cover in small uppercase tracking.
+</ParamField>
+
+<ParamField path="width" type="number" default="230">
+  Book width in pixels.
+</ParamField>
+
+<ParamField path="height" type="number" default="350">
+  Book height in pixels.
+</ParamField>
+
+<ParamField path="pages" type="PageData[]" default="[...RareUI demo pages]">
+  Array of page content objects. Defaults to a set of RareUI demo pages. Each `PageData` object can contain:
+  - `title?: string` — Page heading
+  - `content?: string` — Body text
+  - `image?: string` — Image URL displayed on the page
+  - `caption?: string` — Image caption (reserved for future use)
+  - `quote?: string` — Blockquote text
+  - `author?: string` — Quote attribution
+</ParamField>
+
+<ParamField path="className" type="string">
+  Additional CSS classes applied to the outermost container.
+</ParamField>
+
+## Examples
+
+### Custom cover with title
+
+```tsx
+<Book3D
+  src="/my-book-cover.jpg"
+  title="My Awesome Book"
+  subtitle="By Jane Doe"
+/>
+```
+
+### Custom pages
+
+```tsx
+const myPages = [
+  {
+    title: "Introduction",
+    content: "Welcome. This is the first page."
+  },
+  {
+    image: "/illustration.jpg",
+    caption: "A beautiful illustration"
+  },
+  {
+    quote: "Design is how it works.",
+    author: "Steve Jobs"
+  }
+];
+
+<Book3D
+  src="/cover.jpg"
+  title="My Book"
+  pages={myPages}
+/>
+```
+
+### Larger format
+
+```tsx
+<Book3D
+  src="/fantasy-cover.jpg"
+  title="The Chronicles"
+  subtitle="An Epic Tale"
+  width={250}
+  height={380}
+  pages={myCustomPages}
+/>
+```
+
+## Interactions
+
+| Gesture | Effect |
+|---|---|
+| Hover | Opens the book — cover flips left, body tilts in 3D |
+| Click right page | Flips to the next page |
+| Click left (flipped) page | Flips back to the previous page |
+| Mouse leave | Book closes and resets to page 1 |
+
+<Tip>
+Keep `content` text under 100 words for best readability at the default size. Limit pages to 4–6 for optimal UX — too many pages makes navigation tedious.
+</Tip>
+
+## Features
+
+<CardGroup cols={2}>
+  <Card title="CSS 3D Transform" icon="box">
+    Uses `perspective`, `transformStyle: preserve-3d`, and `rotateY` to achieve a convincing 3D book effect without WebGL.
+  </Card>
+  <Card title="Realistic Page Flip" icon="book-open">
+    Pages animate with a custom cubic bezier easing `[0.23, 1, 0.32, 1]` and staggered delays for natural motion.
+  </Card>
+  <Card title="Bi-directional Navigation" icon="arrow-left-right">
+    Click either side of an open page to advance or go back, with debounce protection against rapid clicking.
+  </Card>
+  <Card title="Fully Customizable" icon="settings">
+    Override cover image, title, subtitle, dimensions, and all page content via props.
+  </Card>
+</CardGroup>

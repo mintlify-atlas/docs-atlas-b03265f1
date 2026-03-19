@@ -1,0 +1,118 @@
+---
+title: "Sound Text"
+description: "An interactive text component that plays Web Audio API tones on hover, mapping each character to a pentatonic scale frequency."
+---
+
+## Overview
+
+`SoundText` renders individual characters as interactive elements: hovering over each letter triggers a unique sine-wave tone generated via the Web Audio API, mapped to a pentatonic scale for a melodic effect. The character jumps, scales up, and glows purple in sync with the sound.
+
+<Warning>
+This component uses the Web Audio API. Audio is initialized on first user interaction to comply with browser autoplay policies. No microphone access is required — all audio is synthesized client-side.
+</Warning>
+
+## Installation
+
+<CodeGroup>
+
+```bash npm
+npx rareui@latest add sound-text
+```
+
+```bash pnpm
+pnpm dlx rareui@latest add sound-text
+```
+
+```bash yarn
+yarn dlx rareui@latest add sound-text
+```
+
+```bash bun
+bunx rareui@latest add sound-text
+```
+
+</CodeGroup>
+
+<Note>
+Requires `framer-motion` as a peer dependency.
+```bash
+npm install framer-motion
+```
+</Note>
+
+## Usage
+
+```tsx
+import SoundText from "@/components/rareui/Text Animation/SoundText";
+
+export default function Hero() {
+  return (
+    <SoundText
+      text="Music to my ears"
+      className="text-6xl font-bold"
+    />
+  );
+}
+```
+
+## Props
+
+<ParamField path="text" type="string" default="Hover over me">
+  The text content to display. Each non-space character becomes an independent interactive letter.
+</ParamField>
+
+<ParamField path="basePitch" type="number" default="300">
+  The root frequency in Hz for the pentatonic scale. Each character's pitch is derived by multiplying this value by a scale ratio based on its index position. Higher values produce higher-pitched tones.
+</ParamField>
+
+<ParamField path="className" type="string">
+  Additional Tailwind or CSS classes applied to the wrapper element. Use to control font size, color, and layout.
+</ParamField>
+
+## Examples
+
+### Default usage
+
+```tsx
+<SoundText
+  text="Hover to play!"
+  className="text-5xl font-bold"
+/>
+```
+
+### Lower pitch, bass tones
+
+```tsx
+<SoundText
+  text="Deep bass"
+  basePitch={150}
+  className="text-6xl font-black"
+/>
+```
+
+### Higher pitch, bright tones
+
+```tsx
+<SoundText
+  text="High notes"
+  basePitch={500}
+  className="text-4xl tracking-widest"
+/>
+```
+
+## Features
+
+<CardGroup cols={2}>
+  <Card title="Web Audio API" icon="music">
+    Uses native browser audio synthesis — no audio files or external libraries required.
+  </Card>
+  <Card title="Pentatonic Scale" icon="sliders">
+    Each character maps to a harmonious frequency in a pentatonic scale, creating pleasant melodic interactions.
+  </Card>
+  <Card title="Spring Animations" icon="activity">
+    Characters bounce upward, scale, and glow purple on hover using Framer Motion spring physics.
+  </Card>
+  <Card title="Lazy Audio Init" icon="zap">
+    The `AudioContext` is created on first user interaction, ensuring compliance with browser autoplay policies.
+  </Card>
+</CardGroup>

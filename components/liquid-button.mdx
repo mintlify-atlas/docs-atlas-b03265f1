@@ -1,0 +1,121 @@
+---
+title: "Liquid Button"
+description: "A button with a physics-based liquid gooey drip effect that reacts to mouse movement."
+---
+
+## Overview
+
+Liquid Button uses an SVG `feColorMatrix` goo filter combined with Framer Motion springs to produce drops that physically follow the cursor. An optional continuous dripping mode keeps the animation running without hover interaction.
+
+## Installation
+
+<CodeGroup>
+
+```bash npm
+npx rareui@latest add liquid-button
+```
+
+```bash pnpm
+pnpm dlx rareui@latest add liquid-button
+```
+
+```bash yarn
+yarn dlx rareui@latest add liquid-button
+```
+
+```bash bun
+bunx rareui@latest add liquid-button
+```
+
+</CodeGroup>
+
+Or copy the component source manually into `components/rareui/LiquidButton.tsx`.
+
+## Usage
+
+```tsx
+import LiquidButton from '@/components/rareui/LiquidButton';
+
+export default function App() {
+  return (
+    <LiquidButton text="Hover me" />
+  );
+}
+```
+
+## Props
+
+<ParamField path="text" type="string" default="Hover me">
+  The text displayed inside the button.
+</ParamField>
+
+<ParamField path="className" type="string">
+  Additional Tailwind classes applied to the outer container `div`.
+</ParamField>
+
+<ParamField path="backgroundColor" type="string" default="bg-black dark:bg-white">
+  Tailwind class controlling the background color of both the button and the liquid drops.
+</ParamField>
+
+<ParamField path="textColor" type="string" default="text-white dark:text-black">
+  Tailwind class controlling the button label color.
+</ParamField>
+
+<ParamField path="isDripping" type="boolean" default="false">
+  When `true`, liquid drops animate continuously without requiring a hover interaction.
+</ParamField>
+
+## Examples
+
+### Custom colors
+
+```tsx
+<LiquidButton
+  text="Click me"
+  backgroundColor="bg-blue-600"
+  textColor="text-white"
+/>
+```
+
+### Continuous dripping mode
+
+```tsx
+<LiquidButton
+  text="Always Dripping"
+  isDripping={true}
+/>
+```
+
+### Custom container width
+
+```tsx
+<LiquidButton
+  text="Wide"
+  className="w-64"
+  backgroundColor="bg-violet-600"
+  textColor="text-white"
+/>
+```
+
+## Features
+
+<CardGroup cols={2}>
+  <Card title="Liquid physics">
+    Realistic dripping effect using an SVG `feColorMatrix` goo filter and Framer Motion.
+  </Card>
+  <Card title="Cursor-reactive drops">
+    Each drop independently follows the mouse position via spring-based motion values.
+  </Card>
+  <Card title="Customizable colors">
+    Button background and text color are fully configurable via Tailwind class props.
+  </Card>
+  <Card title="Continuous dripping mode">
+    The `isDripping` prop enables attention-grabbing perpetual drip animations.
+  </Card>
+  <Card title="Responsive sizing">
+    Drop sizes scale between mobile and desktop breakpoints using Tailwind responsive prefixes.
+  </Card>
+  <Card title="Dark mode support">
+    Default colors adapt automatically with `dark:` Tailwind variants.
+  </Card>
+</CardGroup>

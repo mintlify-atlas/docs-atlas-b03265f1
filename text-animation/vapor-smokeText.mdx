@@ -1,0 +1,141 @@
+---
+title: "Vapor Smoke Text"
+description: "An ethereal text animation that reveals characters through dissolving smoke and blur effects, powered by Framer Motion spring physics."
+---
+
+## Overview
+
+`VaporSmokeText` animates each character of your text from a blurred, scaled, and rotated hidden state into crisp, readable form — simulating vapor or smoke dissipating. Characters stagger sequentially for a cascading reveal effect, and the animation can be toggled programmatically.
+
+## Installation
+
+<CodeGroup>
+
+```bash npm
+npx rareui@latest add vapor-smoke-text
+```
+
+```bash pnpm
+pnpm dlx rareui@latest add vapor-smoke-text
+```
+
+```bash yarn
+yarn dlx rareui@latest add vapor-smoke-text
+```
+
+```bash bun
+bunx rareui@latest add vapor-smoke-text
+```
+
+</CodeGroup>
+
+<Note>
+Requires `framer-motion` as a peer dependency.
+```bash
+npm install framer-motion
+```
+</Note>
+
+## Usage
+
+```tsx
+import { VaporSmokeText } from "@/components/rareui/Text Animation/VaporSmokeText";
+
+export default function Hero() {
+  return (
+    <VaporSmokeText
+      text="Welcome To RareUI"
+      className="text-6xl text-white"
+    />
+  );
+}
+```
+
+## Props
+
+<ParamField path="text" type="string" required>
+  The text content to animate. Each character animates individually with a staggered delay.
+</ParamField>
+
+<ParamField path="trigger" type="boolean" default="true">
+  Controls the animation state. `true` plays the reveal animation; `false` returns characters to the blurred, hidden state.
+</ParamField>
+
+<ParamField path="className" type="string">
+  Additional Tailwind or CSS classes applied to the container. Controls font family, size, color, and spacing. The component uses `font-serif italic` on each character by default.
+</ParamField>
+
+## Examples
+
+### Basic smoke reveal
+
+```tsx
+<VaporSmokeText
+  text="Ethereal"
+  className="text-9xl font-serif text-cyan-400"
+/>
+```
+
+### Scroll-triggered reveal
+
+```tsx
+"use client";
+import { useInView } from "framer-motion";
+import { useRef } from "react";
+import { VaporSmokeText } from "@/components/rareui/Text Animation/VaporSmokeText";
+
+export default function ScrollReveal() {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true });
+
+  return (
+    <div ref={ref}>
+      <VaporSmokeText
+        text="Appears on scroll"
+        trigger={isInView}
+        className="text-6xl"
+      />
+    </div>
+  );
+}
+```
+
+### Toggle-controlled animation
+
+```tsx
+"use client";
+import { useState } from "react";
+import { VaporSmokeText } from "@/components/rareui/Text Animation/VaporSmokeText";
+
+export default function Controlled() {
+  const [show, setShow] = useState(false);
+
+  return (
+    <div className="flex flex-col gap-4">
+      <button onClick={() => setShow(!show)}>Toggle</button>
+      <VaporSmokeText
+        text="Click to animate"
+        trigger={show}
+        className="text-6xl"
+      />
+    </div>
+  );
+}
+```
+
+## Features
+
+<CardGroup cols={2}>
+  <Card title="Blur Dissolve" icon="eye">
+    Characters transition from `blur(20px)` to `blur(0px)`, creating a realistic smoke dissipation effect.
+  </Card>
+  <Card title="Staggered Entry" icon="layers">
+    An 80ms stagger between characters produces a cascading wave rather than all letters animating at once.
+  </Card>
+  <Card title="Spring Physics" icon="activity">
+    Scale, position, rotation, and blur all animate with spring damping for natural, organic motion.
+  </Card>
+  <Card title="Trigger Support" icon="toggle-left">
+    Fully controllable via the `trigger` prop — reverse the animation on demand for interactive use cases.
+  </Card>
+</CardGroup>

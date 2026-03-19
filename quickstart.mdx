@@ -1,80 +1,168 @@
 ---
-title: "Quickstart"
-description: "Start building awesome documentation in minutes"
+title: Quickstart
+description: Add your first RareUI component in under 5 minutes. Choose between the CLI (recommended) or manual copy-paste.
 ---
 
-## Get started in three steps
+This guide walks you through adding a RareUI component to an existing Next.js project. If you don't have a project yet, follow [Install Next.js](/installation/install-nextjs) first.
 
-Get your documentation site running locally and make your first customization.
+## Option 1: CLI (recommended)
 
-### Step 1: Set up your local environment
+The CLI handles file placement, dependency installation, and configuration automatically.
 
-<AccordionGroup>
-  <Accordion icon="copy" title="Clone your docs locally">
-    During the onboarding process, you created a GitHub repository with your docs content if you didn't already have one. You can find a link to this repository in your [dashboard](https://dashboard.mintlify.com).
-    
-    To clone the repository locally so that you can make and preview changes to your docs, follow the [Cloning a repository](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository) guide in the GitHub docs.
-  </Accordion>
-  <Accordion icon="rectangle-terminal" title="Start the preview server">
-    1. Install the Mintlify CLI: `npm i -g mint`
-    2. Navigate to your docs directory and run: `mint dev`
-    3. Open `http://localhost:3000` to see your docs live!
-    
-    <Tip>Your preview updates automatically as you edit files.</Tip>
-  </Accordion>
-</AccordionGroup>
+<Steps>
+  <Step title="Initialize RareUI">
+    Run the `init` command from your project root. This creates a `components.json` file that configures paths and aliases.
 
-### Step 2: Deploy your changes
+    <CodeGroup>
 
-<AccordionGroup>
-  <Accordion icon="github" title="Install our GitHub app">
-    Install the Mintlify GitHub app from your [dashboard](https://dashboard.mintlify.com/settings/organization/github-app).
-    
-    Our GitHub app automatically deploys your changes to your docs site, so you don't need to manage deployments yourself.
-</Accordion>
-<Accordion icon="palette" title="Update your site name and colors">
-    For a first change, let's update the name and colors of your docs site.
+    ```bash npm
+    npx rareui@latest init
+    ```
 
-    1. Open `docs.json` in your editor.
-    2. Change the `"name"` field to your project name.
-    3. Update the `"colors"` to match your brand.
-    4. Save and see your changes instantly at `http://localhost:3000`.
+    ```bash pnpm
+    pnpm dlx rareui@latest init
+    ```
 
-    <Tip>Try changing the primary color to see an immediate difference!</Tip>
-  </Accordion>
-</AccordionGroup>
+    ```bash yarn
+    yarn dlx rareui@latest init
+    ```
 
-### Step 3: Go live
+    ```bash bun
+    bunx rareui@latest init
+    ```
 
-<Accordion icon="rocket" title="Publish your docs">
-  1. Commit and push your changes.
-  2. Your docs will update and be live in moments!
-</Accordion>
+    </CodeGroup>
 
-## Next steps
+    You'll see a confirmation prompt if `components.json` already exists. After initialization, the file contains your project's path aliases and registry configuration.
+  </Step>
 
-Now that you have your docs running, explore these key features:
+  <Step title="Add a component">
+    Add the `liquid-button` component — one of the simplest to get started with.
 
-<CardGroup cols={2}>
+    <CodeGroup>
 
-<Card title="Write Content" icon="pen-to-square" href="/essentials/markdown">
-  Learn MDX syntax and start writing your documentation.
-</Card>
+    ```bash npm
+    npx rareui@latest add liquid-button
+    ```
 
-<Card title="Customize style" icon="palette" href="/essentials/settings">
-  Make your docs match your brand perfectly.
-</Card>
+    ```bash pnpm
+    pnpm dlx rareui@latest add liquid-button
+    ```
 
-<Card title="Add code examples" icon="square-code" href="/essentials/code">
-  Include syntax-highlighted code blocks.
-</Card>
+    ```bash yarn
+    yarn dlx rareui@latest add liquid-button
+    ```
 
-<Card title="API documentation" icon="code" href="/api-reference/introduction">
-  Auto-generate API docs from OpenAPI specs.
-</Card>
+    ```bash bun
+    bunx rareui@latest add liquid-button
+    ```
 
-</CardGroup>
+    </CodeGroup>
 
-<Note>
-  **Need help?** See our [full documentation](https://mintlify.com/docs) or join our [community](https://mintlify.com/community).
-</Note>
+    The CLI downloads the component source to `components/rareui/` and installs any required dependencies (`framer-motion`, `clsx`, `tailwind-merge`) automatically.
+  </Step>
+
+  <Step title="Use the component">
+    Import and render the component in any page or layout file.
+
+    ```tsx title="app/page.tsx"
+    import { LiquidButton } from "@/components/rareui/liquid-button"
+
+    export default function Page() {
+      return (
+        <main className="flex min-h-screen items-center justify-center">
+          <LiquidButton>Get started</LiquidButton>
+        </main>
+      )
+    }
+    ```
+  </Step>
+
+  <Step title="Start the dev server">
+    ```bash
+    npm run dev
+    ```
+
+    Open `http://localhost:3000` to see the liquid button rendered with its gooey animation.
+  </Step>
+</Steps>
+
+## Option 2: Manual copy-paste
+
+If you prefer not to use the CLI, you can copy component code directly from the documentation.
+
+<Steps>
+  <Step title="Install dependencies">
+    Install the packages that RareUI components depend on.
+
+    <CodeGroup>
+
+    ```bash npm
+    npm install framer-motion clsx tailwind-merge
+    ```
+
+    ```bash pnpm
+    pnpm add framer-motion clsx tailwind-merge
+    ```
+
+    ```bash yarn
+    yarn add framer-motion clsx tailwind-merge
+    ```
+
+    ```bash bun
+    bun add framer-motion clsx tailwind-merge
+    ```
+
+    </CodeGroup>
+  </Step>
+
+  <Step title="Create the utility function">
+    Create `lib/utils.ts` with the `cn()` helper. All RareUI components use this for conditional class merging.
+
+    ```ts title="lib/utils.ts"
+    import { type ClassValue, clsx } from "clsx"
+    import { twMerge } from "tailwind-merge"
+
+    export function cn(...inputs: ClassValue[]) {
+      return twMerge(clsx(inputs))
+    }
+    ```
+  </Step>
+
+  <Step title="Create the component file">
+    Create a file at `components/rareui/liquid-button.tsx` and paste the component source from the [Liquid Button component page](/components/liquid-button).
+
+    The component will use your `@/lib/utils` import path, so make sure your `tsconfig.json` has the `@/*` path alias configured:
+
+    ```json title="tsconfig.json"
+    {
+      "compilerOptions": {
+        "baseUrl": ".",
+        "paths": {
+          "@/*": ["./*"]
+        }
+      }
+    }
+    ```
+  </Step>
+
+  <Step title="Import and use">
+    ```tsx title="app/page.tsx"
+    import { LiquidButton } from "@/components/rareui/liquid-button"
+
+    export default function Page() {
+      return (
+        <main className="flex min-h-screen items-center justify-center">
+          <LiquidButton>Get started</LiquidButton>
+        </main>
+      )
+    }
+    ```
+  </Step>
+</Steps>
+
+## What's next?
+
+- Read the [CLI reference](/installation/cli) to learn all available commands and flags
+- Explore all component categories in the sidebar
+- Run `npx rareui@latest add` (no component name) to see the full list of available components

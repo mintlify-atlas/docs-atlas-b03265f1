@@ -1,0 +1,149 @@
+---
+title: "Word Magnet"
+description: "A physics-based text component where words are repelled by the cursor and snap back to their original positions using spring animations."
+---
+
+## Overview
+
+`WordMagnet` tracks mouse position across the entire window and applies a repulsion force to each word within a configurable radius. Words spring away from the cursor in real time using Framer Motion's `useSpring`, then snap back after a configurable delay — creating a magnetic field effect over a block of text.
+
+## Installation
+
+<CodeGroup>
+
+```bash npm
+npx rareui@latest add word-magnet
+```
+
+```bash pnpm
+pnpm dlx rareui@latest add word-magnet
+```
+
+```bash yarn
+yarn dlx rareui@latest add word-magnet
+```
+
+```bash bun
+bunx rareui@latest add word-magnet
+```
+
+</CodeGroup>
+
+<Note>
+Requires `framer-motion` as a peer dependency.
+```bash
+npm install framer-motion
+```
+</Note>
+
+## Usage
+
+```tsx
+import WordMagnet from "@/components/rareui/Text Animation/WordMagnet";
+
+export default function Hero() {
+  return (
+    <WordMagnet
+      text="Hover over these words and watch them dance"
+      textColor="currentColor"
+    />
+  );
+}
+```
+
+## Props
+
+<ParamField path="text" type="string" default="Hover over these words and watch them dance">
+  The text content to display. Whitespace-delimited words are each independently tracked and displaced.
+</ParamField>
+
+<ParamField path="radius" type="number" default="130">
+  Interaction radius in pixels. Words within this distance from the cursor are repelled.
+</ParamField>
+
+<ParamField path="force" type="number" default="0.45">
+  Repulsion force multiplier between `0.1` and `1.0`. Higher values push words further away from the cursor.
+</ParamField>
+
+<ParamField path="damping" type="number" default="28">
+  Spring damping value between `5` and `50`. Lower values produce bouncier return-to-rest behavior.
+</ParamField>
+
+<ParamField path="returnDelay" type="number" default="400">
+  Delay in milliseconds before a word springs back to its original position after the cursor moves away.
+</ParamField>
+
+<ParamField path="textColor" type="string" default="#000000">
+  CSS color value for the text. Accepts any valid CSS color string.
+</ParamField>
+
+<ParamField path="font" type="React.CSSProperties" default="{ fontSize: '32px', fontWeight: 600, letterSpacing: '-0.03em', lineHeight: '1.2em' }">
+  A React `CSSProperties` object controlling font styling. Overrides font size, weight, letter spacing, and line height.
+</ParamField>
+
+<ParamField path="disableOnMobile" type="boolean" default="false">
+  When `true`, the repulsion interaction is disabled on touch devices (viewport width under 768px or `ontouchstart` present). Words render as static text.
+</ParamField>
+
+<ParamField path="overflow" type="visible | hidden | scroll | auto" default="visible">
+  CSS `overflow` property for the container. Use `"hidden"` if the repulsion effect should be clipped to the container bounds.
+</ParamField>
+
+<ParamField path="className" type="string">
+  Additional Tailwind or CSS classes applied to the container.
+</ParamField>
+
+<ParamField path="style" type="React.CSSProperties">
+  Inline styles applied to the container. Merged with the font and overflow props.
+</ParamField>
+
+## Examples
+
+### Basic usage
+
+```tsx
+<WordMagnet
+  text="Hover over these words and watch them dance"
+/>
+```
+
+### Aggressive repulsion
+
+```tsx
+<WordMagnet
+  text="Stay away from me"
+  radius={200}
+  force={0.8}
+  damping={10}
+  returnDelay={800}
+  font={{ fontSize: "48px", fontWeight: 700 }}
+/>
+```
+
+### Mobile-safe hero headline
+
+```tsx
+<WordMagnet
+  text="Build something rare"
+  textColor="white"
+  disableOnMobile={true}
+  font={{ fontSize: "64px", fontWeight: 900, letterSpacing: "-0.05em" }}
+/>
+```
+
+## Features
+
+<CardGroup cols={2}>
+  <Card title="Physics Repulsion" icon="zap">
+    Per-word spring displacement calculated from cursor distance and angle using real vector math.
+  </Card>
+  <Card title="Smart Recovery" icon="rotate-ccw">
+    Words spring back to their original positions after a configurable delay once the cursor moves away.
+  </Card>
+  <Card title="Throttled Mouse Tracking" icon="activity">
+    Mouse events are throttled to ~60fps using a timestamp check, keeping CPU usage minimal.
+  </Card>
+  <Card title="Mobile Aware" icon="smartphone">
+    The `disableOnMobile` prop gracefully degrades the interaction on touch devices.
+  </Card>
+</CardGroup>

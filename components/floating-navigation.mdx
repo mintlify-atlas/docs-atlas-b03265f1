@@ -1,0 +1,112 @@
+---
+title: "Floating Navigation"
+description: "A fixed bottom navigation bar with per-icon micro-animations, hover tooltips, and a glowing active pill."
+---
+
+## Overview
+
+Floating Navigation renders as a pill-shaped bar fixed to the bottom center of the viewport. Each icon has a unique motion variant — the home icon bounces, search shakes, the bell rings, and settings spins — making state transitions communicative and tactile. Full keyboard navigation is built in via arrow key handling.
+
+## Installation
+
+<CodeGroup>
+
+```bash npm
+npx rareui@latest add floating-navigation
+```
+
+```bash pnpm
+pnpm dlx rareui@latest add floating-navigation
+```
+
+```bash yarn
+yarn dlx rareui@latest add floating-navigation
+```
+
+```bash bun
+bunx rareui@latest add floating-navigation
+```
+
+</CodeGroup>
+
+Or copy the component manually from `components/rareui/FloatingNavigation.tsx` into your project.
+
+## Usage
+
+```tsx
+import FloatingNavigation from '@/components/rareui/FloatingNavigation';
+
+export default function App() {
+  return <FloatingNavigation />;
+}
+```
+
+<Note>
+  By default the component is `position: fixed` to the bottom center of the viewport. Pass a custom `className` to override positioning when embedding in a demo container.
+</Note>
+
+## Props
+
+<ParamField path="items" type="NavItem[]" default="defaultItems">
+  Array of navigation items. Each item requires `id: string`, `label: string`, and `icon: React.ReactNode`. Defaults to Home, Search, Inbox, Profile, and Settings with built-in SVG icons.
+</ParamField>
+
+<ParamField path="className" type="string">
+  Additional Tailwind or CSS classes for the outermost container. Use this to override `fixed` positioning or adjust the `bottom`/`z-index` values.
+</ParamField>
+
+## Examples
+
+### Default navigation
+
+```tsx
+<FloatingNavigation />
+```
+
+### Custom navigation items
+
+```tsx
+import FloatingNavigation from '@/components/rareui/FloatingNavigation';
+import { HomeIcon, BookIcon, UserIcon } from 'lucide-react';
+
+const items = [
+  { id: 'home', label: 'Home', icon: <HomeIcon className="w-5 h-5" /> },
+  { id: 'library', label: 'Library', icon: <BookIcon className="w-5 h-5" /> },
+  { id: 'profile', label: 'Profile', icon: <UserIcon className="w-5 h-5" /> },
+];
+
+export default function App() {
+  return <FloatingNavigation items={items} />;
+}
+```
+
+### Overriding position for demo embedding
+
+```tsx
+<div className="relative h-48">
+  <FloatingNavigation className="absolute bottom-6 left-1/2 -translate-x-1/2 z-10" />
+</div>
+```
+
+## Features
+
+<CardGroup cols={2}>
+  <Card title="Per-Icon Micro-Animations">
+    Each icon has a unique Framer Motion variant: bounce, shake, ring, scale, or rotate — triggered on activation.
+  </Card>
+  <Card title="Glowing Active Pill">
+    The active background uses a dark-to-darker gradient with a drop shadow glow that slides between items via `layoutId`.
+  </Card>
+  <Card title="Hover Tooltips">
+    Labels appear above each icon on hover with a smooth scale-and-fade animation and a small directional arrow.
+  </Card>
+  <Card title="Keyboard Accessible">
+    Arrow Left / Arrow Right keys move focus and activation between items. ARIA `role="tab"` and `aria-selected` are applied correctly.
+  </Card>
+  <Card title="Glassmorphism Bar">
+    The pill container uses `backdrop-blur-xl` and semi-transparent fills for a premium frosted-glass background.
+  </Card>
+  <Card title="Dark Mode">
+    Active pill inverts to white in dark mode; all icon and tooltip colors adapt automatically.
+  </Card>
+</CardGroup>

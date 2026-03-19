@@ -1,0 +1,147 @@
+---
+title: "Image Expand Testimonial"
+description: "A responsive testimonial section where reviewer photos expand with smooth spring animations as you navigate between reviews, with autoplay support."
+---
+
+## Overview
+
+`ImageExpandTestimonial` displays a set of testimonials with a portrait gallery where the active reviewer's photo expands to full height while inactive photos collapse to thumbnails. On desktop, the active photo is anchored to the right; on mobile it is centered. Transitions are driven by Framer Motion spring physics.
+
+## Installation
+
+<CodeGroup>
+
+```bash npm
+npx rareui@latest add image-expand-testimonial
+```
+
+```bash pnpm
+pnpm dlx rareui@latest add image-expand-testimonial
+```
+
+```bash yarn
+yarn dlx rareui@latest add image-expand-testimonial
+```
+
+```bash bun
+bunx rareui@latest add image-expand-testimonial
+```
+
+</CodeGroup>
+
+<Note>
+Requires `framer-motion`, `lucide-react`, and `next/image` (Next.js). Install peer dependencies:
+```bash
+npm install framer-motion lucide-react
+```
+</Note>
+
+## Usage
+
+```tsx
+import { ImageExpandTestimonial } from "@/components/rareui/Sections/imageExpandTestimonial";
+
+const testimonials = [
+  {
+    id: "1",
+    name: "Sarah Chen",
+    role: "VP of Engineering",
+    company: "TechCorp Inc.",
+    quote: "This component library has transformed our development workflow. The attention to detail is remarkable.",
+    image: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&h=600&fit=crop",
+    rating: 5,
+  },
+  {
+    id: "2",
+    name: "Marcus Johnson",
+    role: "Lead Developer",
+    company: "StartupXYZ",
+    quote: "Clean, performant, and beautiful. Everything we needed for our product launch.",
+    image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=600&fit=crop",
+    rating: 4.5,
+  },
+];
+
+export default function TestimonialsSection() {
+  return (
+    <ImageExpandTestimonial
+      testimonials={testimonials}
+      autoPlayInterval={5000}
+    />
+  );
+}
+```
+
+## Props
+
+<ParamField path="testimonials" type="Testimonial[]" required>
+  Array of testimonial objects. Each object must have the following shape:
+
+  ```ts
+  interface Testimonial {
+    id: string;        // Unique identifier (used as React key)
+    name: string;      // Reviewer full name
+    role: string;      // Job title
+    company: string;   // Company name
+    quote: string;     // Testimonial text
+    image: string;     // Portrait image URL
+    rating?: number;   // Optional star rating (supports half stars, e.g. 4.5)
+  }
+  ```
+</ParamField>
+
+<ParamField path="autoPlayInterval" type="number" default="5000">
+  Interval in milliseconds between automatic testimonial advances. The timer resets when the user manually navigates.
+</ParamField>
+
+<ParamField path="className" type="string">
+  Additional CSS classes applied to the outermost container. The container defaults to `max-w-7xl mx-auto`.
+</ParamField>
+
+## Examples
+
+### Faster autoplay
+
+```tsx
+<ImageExpandTestimonial
+  testimonials={testimonials}
+  autoPlayInterval={3000}
+/>
+```
+
+### Disabled autoplay (set a very large interval)
+
+```tsx
+<ImageExpandTestimonial
+  testimonials={testimonials}
+  autoPlayInterval={999999999}
+/>
+```
+
+### Full-height section
+
+```tsx
+<section className="min-h-screen flex items-center">
+  <ImageExpandTestimonial
+    testimonials={testimonials}
+    className="py-24"
+  />
+</section>
+```
+
+## Features
+
+<CardGroup cols={2}>
+  <Card title="Expanding Photo Gallery" icon="image">
+    The active portrait animates from a small thumbnail to a tall hero image using Framer Motion layout animations with spring physics.
+  </Card>
+  <Card title="Responsive Layout" icon="monitor">
+    On mobile (&lt;1024px) the active photo is centered; on desktop it's anchored to the right, with a sidebar index counter.
+  </Card>
+  <Card title="Half-Star Ratings" icon="star">
+    Star ratings support decimal values (e.g. `4.5`) with a pixel-perfect half-star clip mask implementation.
+  </Card>
+  <Card title="Auto-Play with Reset" icon="play">
+    Auto-advance timer resets on manual navigation, preventing jarring transitions right after user interaction.
+  </Card>
+</CardGroup>

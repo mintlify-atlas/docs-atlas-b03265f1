@@ -1,0 +1,143 @@
+---
+title: "Liquid Tooltip"
+description: "A tooltip with spring physics that wobbles and tracks mouse position, giving content a satisfying liquid-like feel."
+---
+
+## Overview
+
+Liquid Tooltip wraps any element and renders a floating label driven by Framer Motion spring values. As the mouse moves across the trigger, the tooltip translates and rotates with spring physics, creating a fluid, organic wobble distinct from standard CSS transitions.
+
+## Installation
+
+<CodeGroup>
+
+```bash npm
+npx rareui@latest add liquid-tooltip
+```
+
+```bash pnpm
+pnpm dlx rareui@latest add liquid-tooltip
+```
+
+```bash yarn
+yarn dlx rareui@latest add liquid-tooltip
+```
+
+```bash bun
+bunx rareui@latest add liquid-tooltip
+```
+
+</CodeGroup>
+
+Or copy the component manually from `components/rareui/LiquidTooltip.tsx` into your project.
+
+## Usage
+
+```tsx
+import { LiquidTooltip } from '@/components/rareui/LiquidTooltip';
+
+export default function MyComponent() {
+  return (
+    <LiquidTooltip text="Hello world!">
+      <button>Hover me</button>
+    </LiquidTooltip>
+  );
+}
+```
+
+## Props
+
+<ParamField path="text" type="string">
+  The text content displayed inside the tooltip bubble. Required.
+</ParamField>
+
+<ParamField path="children" type="React.ReactNode">
+  The trigger element the tooltip attaches to. Required.
+</ParamField>
+
+<ParamField path="placement" type="'top' | 'bottom' | 'left' | 'right'" default="'top'">
+  Position of the tooltip relative to the trigger element. Controls both the offset direction and the enter/exit animation axis.
+</ParamField>
+
+<ParamField path="className" type="string">
+  Additional Tailwind or CSS classes applied to the outer wrapper `<span>`.
+</ParamField>
+
+<ParamField path="popupClassName" type="string">
+  Additional classes applied directly to the tooltip popup `<div>`, useful for overriding background color or padding.
+</ParamField>
+
+## Examples
+
+### All four placements
+
+```tsx
+import { LiquidTooltip } from '@/components/rareui/LiquidTooltip';
+
+export default function PlacementDemo() {
+  return (
+    <div className="flex gap-8 items-center justify-center p-12">
+      <LiquidTooltip text="Top" placement="top">
+        <button className="px-4 py-2 rounded-md bg-amber-300">Top</button>
+      </LiquidTooltip>
+
+      <LiquidTooltip text="Bottom" placement="bottom">
+        <button className="px-4 py-2 rounded-md bg-amber-300">Bottom</button>
+      </LiquidTooltip>
+
+      <LiquidTooltip text="Left" placement="left">
+        <button className="px-4 py-2 rounded-md bg-amber-300">Left</button>
+      </LiquidTooltip>
+
+      <LiquidTooltip text="Right" placement="right">
+        <button className="px-4 py-2 rounded-md bg-amber-300">Right</button>
+      </LiquidTooltip>
+    </div>
+  );
+}
+```
+
+### Custom popup styling
+
+```tsx
+<LiquidTooltip
+  text="Custom style"
+  placement="top"
+  popupClassName="bg-violet-600 text-white"
+>
+  <span className="underline cursor-pointer">Hover this text</span>
+</LiquidTooltip>
+```
+
+### Tooltip on an icon button
+
+```tsx
+<LiquidTooltip text="Delete item" placement="bottom">
+  <button aria-label="Delete" className="p-2 rounded-full hover:bg-red-50">
+    <TrashIcon className="w-5 h-5 text-red-500" />
+  </button>
+</LiquidTooltip>
+```
+
+## Features
+
+<CardGroup cols={2}>
+  <Card title="Liquid Spring Physics">
+    Position and rotation are driven by Framer Motion spring values for an organic, fluid wobble.
+  </Card>
+  <Card title="Mouse Parallax Tracking">
+    The tooltip translates along the trigger element in sync with mouse position for subtle depth.
+  </Card>
+  <Card title="Directional Awareness">
+    Entry and exit animations adapt automatically based on the `placement` prop — no manual config needed.
+  </Card>
+  <Card title="Four Placements">
+    Supports `top`, `bottom`, `left`, and `right` with correct arrow positioning for each.
+  </Card>
+  <Card title="Composable">
+    Wraps any `React.ReactNode` — buttons, links, icons, or arbitrary elements.
+  </Card>
+  <Card title="Dark Mode">
+    Default styles invert between `neutral-900` and `neutral-100` based on the active color scheme.
+  </Card>
+</CardGroup>

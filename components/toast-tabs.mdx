@@ -1,0 +1,136 @@
+---
+title: "Toast Tabs"
+description: "An avatar-switcher tab component that presents active content in a toast-style card with an animated progress ring and autoplay."
+---
+
+## Overview
+
+Toast Tabs combines an avatar row with a floating toast card. The active avatar grows and gains a colored SVG progress ring that fills as the autoplay timer advances. Hovering pauses the timer; clicking an avatar resets and activates it. All transitions use Framer Motion's `popLayout` mode for seamless enter/exit sequencing.
+
+## Installation
+
+<CodeGroup>
+
+```bash npm
+npx rareui@latest add toast-tabs
+```
+
+```bash pnpm
+pnpm dlx rareui@latest add toast-tabs
+```
+
+```bash yarn
+yarn dlx rareui@latest add toast-tabs
+```
+
+```bash bun
+bunx rareui@latest add toast-tabs
+```
+
+</CodeGroup>
+
+Or copy the component manually from `components/rareui/ToastTabs.tsx` into your project.
+
+## Usage
+
+```tsx
+import ToastTabs from '@/components/rareui/ToastTabs';
+
+export default function MyComponent() {
+  return <ToastTabs />;
+}
+```
+
+## Props
+
+<ParamField path="tabs" type="TabData[]" default="defaultTabs">
+  Array of tab data objects. Each entry requires `id: string | number`, `image: string` (avatar URL), `title: string`, and `description: string` (quote or summary shown in the toast card).
+</ParamField>
+
+<ParamField path="autoplay" type="boolean" default="true">
+  When `true`, the component automatically advances to the next tab after each `autoplayDelay` interval. Pauses on mouse enter and resumes on mouse leave.
+</ParamField>
+
+<ParamField path="autoplayDelay" type="number" default="3000">
+  Duration in milliseconds between automatic tab advances. The progress ring fills over this duration to indicate remaining time.
+</ParamField>
+
+<ParamField path="ringColor" type="string" default="'#f97316'">
+  CSS color value for the SVG progress ring around the active avatar. In dark mode, the ring always renders as white regardless of this value.
+</ParamField>
+
+<ParamField path="className" type="string">
+  Additional Tailwind or CSS classes applied to the outermost container `<div>`.
+</ParamField>
+
+## Examples
+
+### Default testimonials carousel
+
+```tsx
+<ToastTabs />
+```
+
+### Custom tabs with a blue ring
+
+```tsx
+import ToastTabs, { TabData } from '@/components/rareui/ToastTabs';
+
+const reviews: TabData[] = [
+  {
+    id: 'amy',
+    image: 'https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=200',
+    title: 'Amy Park',
+    description: 'Shipping features twice as fast since we adopted this design system.',
+  },
+  {
+    id: 'leo',
+    image: 'https://images.unsplash.com/photo-1502767089025-6572583495b9?w=200',
+    title: 'Leo Martin',
+    description: 'The animations make our product feel genuinely premium, not just polished.',
+  },
+];
+
+export default function Reviews() {
+  return (
+    <ToastTabs
+      tabs={reviews}
+      ringColor="#3b82f6"
+      autoplayDelay={4000}
+    />
+  );
+}
+```
+
+### Static display without autoplay
+
+```tsx
+<ToastTabs autoplay={false} />
+```
+
+<Tip>
+  When `autoplay` is `false`, the active avatar still shows the colored ring, but it renders as a static full circle rather than a progress arc.
+</Tip>
+
+## Features
+
+<CardGroup cols={2}>
+  <Card title="Animated Progress Ring">
+    An SVG `stroke-dashoffset` driven by a Framer Motion value fills around the active avatar as the autoplay timer counts down.
+  </Card>
+  <Card title="Toast Content Card">
+    Active tab content animates in and out using `AnimatePresence` with `popLayout` mode for smooth positional sequencing.
+  </Card>
+  <Card title="Autoplay with Pause">
+    The timer advances using `useAnimationFrame` for frame-accurate progress tracking and pauses automatically on hover.
+  </Card>
+  <Card title="Keyboard Navigation">
+    Arrow Left / Arrow Right keys move between avatars, reset the progress ring, and shift focus — fully accessible.
+  </Card>
+  <Card title="Customizable Ring Color">
+    Pass any valid CSS color to `ringColor` to match your brand. Overridden to white automatically in dark mode.
+  </Card>
+  <Card title="Grayscale Inactive Avatars">
+    Inactive avatars are desaturated and dimmed, creating clear visual hierarchy that lifts on hover.
+  </Card>
+</CardGroup>

@@ -1,97 +1,95 @@
 ---
-title: "Introduction"
-description: "Welcome to the new home for your documentation"
+title: "RareUI"
+description: "The most unique & premium library of animated React components — copy-paste or install via CLI."
 ---
 
-## Setting up
-
-Get your documentation site up and running in minutes.
-
-<Card
-  title="Start here"
-  icon="rocket"
-  href="/quickstart"
-  horizontal
->
-  Follow our three step quickstart guide.
-</Card>
-
-## Make it yours
-
-Design a docs site that looks great and empowers your users.
-
-<Columns cols={2}>
-  <Card
-    title="Edit locally"
-    icon="pen-to-square"
-    href="/development"
-  >
-    Edit your docs locally and preview them in real time.
+<CardGroup cols={2}>
+  <Card title="Get Started" icon="rocket" href="/introduction">
+    Learn what RareUI is and how to integrate it into your project.
   </Card>
-  <Card
-    title="Customize your site"
-    icon="palette"
-    href="/essentials/settings"
-  >
-    Customize the design and colors of your site to match your brand.
+  <Card title="CLI Install" icon="terminal" href="/installation/cli">
+    Install components instantly with `npx rareui add [component-name]`.
   </Card>
-    <Card
-    title="Set up navigation"
-    icon="map"
-    href="/essentials/navigation"
-  >
-    Organize your docs to help users find what they need and succeed with your product.
+  <Card title="Browse Components" icon="grid-2" href="/components/liquid-button">
+    Explore 20+ premium animated components ready to use in production.
   </Card>
-  <Card
-    title="API documentation"
-    icon="terminal"
-    href="/api-reference/introduction"
-  >
-    Auto-generate API documentation from OpenAPI specifications.
+  <Card title="Quickstart" icon="bolt" href="/quickstart">
+    Get your first RareUI component running in under 5 minutes.
   </Card>
-</Columns>
+</CardGroup>
 
-## Create beautiful pages
+## What is RareUI?
 
-Everything you need to create world-class documentation.
+RareUI is a free, open-source **React UI component library** featuring premium animated components designed to help you build stunning web applications. Every component is crafted with attention to detail, featuring smooth animations, modern designs, and production-ready TypeScript code.
 
-<Columns cols={2}>
-  <Card
-    title="Write with MDX"
-    icon="pen-fancy"
-    href="/essentials/markdown"
-  >
-    Use MDX to style your docs pages.
-  </Card>
-  <Card
-    title="Code samples"
-    icon="code"
-    href="/essentials/code"
-  >
-    Add sample code to demonstrate how to use your product.
-  </Card>
-  <Card
-    title="Images"
-    icon="image"
-    href="/essentials/images"
-  >
-    Display images and other media.
-  </Card>
-  <Card
-    title="Reusable snippets"
-    icon="recycle"
-    href="/essentials/reusable-snippets"
-  >
-    Write once and reuse across your docs.
-  </Card>
-</Columns>
+Components are **copy-paste ready** — no lock-in, no complex configuration. Your code lives in your project.
 
-## Need inspiration?
+## Component categories
 
-<Card
-  title="See complete examples"
-  icon="stars"
-  href="https://mintlify.com/customers"
->
-  Browse our showcase of exceptional documentation sites.
-</Card>
+<CardGroup cols={3}>
+  <Card title="Buttons" icon="hand-pointer" href="/components/liquid-button">
+    Liquid, glass shimmer, 3D neumorphism, retro pixel, and more premium button styles.
+  </Card>
+  <Card title="Cards & Overlays" icon="layer-group" href="/components/particle-card">
+    Particle cards, profile cards, tooltips, and loading spinners with unique effects.
+  </Card>
+  <Card title="Navigation" icon="compass" href="/components/animated-tab">
+    Animated tabs, floating navigation, and toast tab systems.
+  </Card>
+  <Card title="Text Animation" icon="text-size" href="/text-animation/magnetic-scatterText">
+    Magnetic scatter, sound-reactive, vapor smoke, and word magnet text effects.
+  </Card>
+  <Card title="Interactive Backgrounds" icon="wand-magic-sparkles" href="/interactive-background/liquid-wave">
+    Immersive WebGL-powered liquid wave backgrounds.
+  </Card>
+  <Card title="3D Elements" icon="cube" href="/3d-elements/liquid-metal">
+    Shader-based liquid metal and 3D book effects powered by WebGL and Three.js.
+  </Card>
+</CardGroup>
+
+## Built with modern tech
+
+<CardGroup cols={2}>
+  <Card title="React 19 + Next.js 16" icon="react">
+    Built with the latest React and Next.js features for optimal performance.
+  </Card>
+  <Card title="Tailwind CSS 4" icon="paint-brush">
+    Utility-first styling makes every component easy to customize.
+  </Card>
+  <Card title="Framer Motion 12" icon="film">
+    Smooth, physics-based animations that delight users.
+  </Card>
+  <Card title="TypeScript" icon="code">
+    Full type safety and IntelliSense support out of the box.
+  </Card>
+</CardGroup>
+
+## Install your first component
+
+<CodeGroup>
+
+```bash npm
+npx rareui@latest init
+npx rareui@latest add liquid-button
+```
+
+```bash pnpm
+pnpm dlx rareui@latest init
+pnpm dlx rareui@latest add liquid-button
+```
+
+```bash yarn
+yarn dlx rareui@latest init
+yarn dlx rareui@latest add liquid-button
+```
+
+```bash bun
+bunx rareui@latest init
+bunx rareui@latest add liquid-button
+```
+
+</CodeGroup>
+
+<Note>
+  RareUI is 100% free and open source under the MIT license. All components are yours to keep, modify, and ship.
+</Note>

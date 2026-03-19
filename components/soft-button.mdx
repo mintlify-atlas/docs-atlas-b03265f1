@@ -1,0 +1,111 @@
+---
+title: "Soft Button"
+description: "A neumorphic button with multi-layer soft shadows, letter-spacing animation, and a glow effect on hover."
+---
+
+## Overview
+
+Soft Button uses four-layer neumorphic `box-shadow` stacks (two outer, two inset) to simulate a softly raised surface. On hover the background inverts to solid black (or white in dark mode), the letter-spacing widens, and a primary-color glow ring appears — all within a 600ms ease transition.
+
+## Installation
+
+<CodeGroup>
+
+```bash npm
+npx rareui@latest add soft-button
+```
+
+```bash pnpm
+pnpm dlx rareui@latest add soft-button
+```
+
+```bash yarn
+yarn dlx rareui@latest add soft-button
+```
+
+```bash bun
+bunx rareui@latest add soft-button
+```
+
+</CodeGroup>
+
+Or copy the component source manually into `components/rareui/SoftButton.tsx`.
+
+## Usage
+
+```tsx
+import SoftButton from '@/components/rareui/SoftButton';
+
+export default function App() {
+  return (
+    <SoftButton onClick={() => alert('Clicked!')}>
+      Click Me
+    </SoftButton>
+  );
+}
+```
+
+<Tip>
+  The outer wrapper is a `div`, not a `button` element. Pass event handlers like `onClick` via the `...props` spread. For keyboard accessibility, add `role="button"` and `tabIndex={0}` when needed.
+</Tip>
+
+## Props
+
+<ParamField path="children" type="React.ReactNode" default="Button">
+  Content displayed inside the button.
+</ParamField>
+
+<ParamField path="className" type="string">
+  Additional Tailwind classes applied to the outer wrapper `div`. Useful for overriding the default fixed `h-[50px] w-[160px]` dimensions.
+</ParamField>
+
+<ParamField path="...props" type="React.HTMLAttributes<HTMLDivElement>">
+  Any standard HTML `div` attribute — `onClick`, `onMouseEnter`, `aria-*`, etc.
+</ParamField>
+
+## Examples
+
+### Default button
+
+```tsx
+<SoftButton>Submit</SoftButton>
+```
+
+### Custom size via className
+
+```tsx
+<SoftButton className="h-14 w-48">
+  Get Started
+</SoftButton>
+```
+
+### With click handler
+
+```tsx
+<SoftButton onClick={() => router.push('/dashboard')}>
+  Dashboard
+</SoftButton>
+```
+
+## Features
+
+<CardGroup cols={2}>
+  <Card title="Neumorphic shadow stack">
+    Four-layer `box-shadow` — two outer and two inset — create a convincingly raised soft surface.
+  </Card>
+  <Card title="Letter-spacing animation">
+    Tracking expands from `1px` to `2px` on hover, adding a dynamic kinetic feel.
+  </Card>
+  <Card title="Primary-color glow">
+    A CSS-variable-based `hsl(var(--primary))` glow ring appears on hover for theme-aware highlighting.
+  </Card>
+  <Card title="Active press feedback">
+    `scale(0.98)` on active state gives tactile confirmation of a click.
+  </Card>
+  <Card title="600ms smooth transitions">
+    All state changes — background, shadow, scale, tracking — transition together at 600ms.
+  </Card>
+  <Card title="Dark mode support">
+    Shadow opacities and hover colors are independently tuned for light and dark themes.
+  </Card>
+</CardGroup>

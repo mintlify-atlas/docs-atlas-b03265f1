@@ -1,0 +1,101 @@
+---
+title: "Neumorphism 3D Button"
+description: "A 3D neumorphic button with multi-layer shadows, gradient text, and a realistic press animation."
+---
+
+## Overview
+
+Neumorphism 3D Button stacks multiple `box-shadow` layers — including directional outer shadows and complex inset shadows — to simulate physical depth. Pressing the button triggers a realistic inward-push effect via shadow inversion, `scale(0.975)`, and a gradient clip-path transition.
+
+## Installation
+
+<CodeGroup>
+
+```bash npm
+npx rareui@latest add neumorphism-3d-button
+```
+
+```bash pnpm
+pnpm dlx rareui@latest add neumorphism-3d-button
+```
+
+```bash yarn
+yarn dlx rareui@latest add neumorphism-3d-button
+```
+
+```bash bun
+bunx rareui@latest add neumorphism-3d-button
+```
+
+</CodeGroup>
+
+Or copy the component source manually into `components/rareui/neumorphism3DButton.tsx`.
+
+## Usage
+
+```tsx
+import { Neumorphism3DButton } from '@/components/rareui/neumorphism3DButton';
+
+export default function App() {
+  return (
+    <Neumorphism3DButton onClick={() => alert('Pressed!')}>
+      Press Me
+    </Neumorphism3DButton>
+  );
+}
+```
+
+## Props
+
+<ParamField path="children" type="React.ReactNode" default="Click Me">
+  The content rendered inside the button.
+</ParamField>
+
+<ParamField path="onClick" type="() => void">
+  Callback fired when the button is clicked.
+</ParamField>
+
+<ParamField path="disabled" type="boolean" default="false">
+  When `true`, the native button `disabled` attribute is applied.
+</ParamField>
+
+## Examples
+
+### Basic
+
+```tsx
+<Neumorphism3DButton>Click Me</Neumorphism3DButton>
+```
+
+### With click handler
+
+```tsx
+<Neumorphism3DButton onClick={() => console.log('pressed')}>
+  Confirm
+</Neumorphism3DButton>
+```
+
+### Disabled state
+
+```tsx
+<Neumorphism3DButton disabled>
+  Unavailable
+</Neumorphism3DButton>
+```
+
+## Features
+
+<CardGroup cols={2}>
+  <Card title="Realistic 3D depth">
+    Multiple outer `box-shadow` layers simulate a light source hitting a raised surface from the top-left.
+  </Card>
+  <Card title="Press animation">
+    On `mousedown`, outer shadows collapse to zero and inset shadows deepen to replicate a physical button press.
+  </Card>
+  <Card title="Gradient text">
+    Button label uses `background-clip: text` with a light-to-dark gradient for a metallic engraved look.
+  </Card>
+  <Card title="Dark mode support">
+    Tailwind `dark:` variants independently tune shadow opacities and background gradients for dark themes.
+  </Card>
+</CardGroup>

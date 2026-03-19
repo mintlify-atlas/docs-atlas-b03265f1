@@ -1,0 +1,186 @@
+---
+title: Install Tailwind CSS
+description: Tailwind CSS 4 is included in the default Next.js setup. This page covers verification, manual configuration, and dark mode CSS variables.
+---
+
+If you created your project with `create-next-app` and selected Tailwind CSS (the default), Tailwind CSS 4 is already installed and configured. You can verify this and move on to [Add Utilities](/installation/add-utilities).
+
+<Note>
+  Tailwind CSS v4 ships with Next.js by default as of Next.js 15+. The configuration is now CSS-first — there is no `tailwind.config.ts` file unless you create one.
+</Note>
+
+## Verify your setup
+
+Check that `app/globals.css` contains the Tailwind import:
+
+```css title="app/globals.css"
+@import "tailwindcss";
+```
+
+If you see this line, Tailwind CSS 4 is active. No further configuration is needed to use RareUI components.
+
+## Tailwind CSS 4 (manual setup)
+
+If you are adding Tailwind CSS 4 to an existing project that was not created with `create-next-app`, follow these steps.
+
+<Steps>
+  <Step title="Install packages">
+    <CodeGroup>
+
+    ```bash npm
+    npm install tailwindcss @tailwindcss/postcss @tailwindcss/cli
+    ```
+
+    ```bash pnpm
+    pnpm add tailwindcss @tailwindcss/postcss @tailwindcss/cli
+    ```
+
+    ```bash yarn
+    yarn add tailwindcss @tailwindcss/postcss @tailwindcss/cli
+    ```
+
+    ```bash bun
+    bun add tailwindcss @tailwindcss/postcss @tailwindcss/cli
+    ```
+
+    </CodeGroup>
+  </Step>
+
+  <Step title="Configure PostCSS">
+    Create a `postcss.config.mjs` file at your project root.
+
+    ```js title="postcss.config.mjs"
+    const config = {
+      plugins: {
+        "@tailwindcss/postcss": {},
+      },
+    };
+    export default config;
+    ```
+  </Step>
+
+  <Step title="Add the Tailwind import">
+    Add the import to your main CSS file.
+
+    ```css title="app/globals.css"
+    @import "tailwindcss";
+
+    @theme {
+      /* Customize your theme here */
+      --font-sans: "Inter", sans-serif;
+    }
+    ```
+  </Step>
+
+  <Step title="Start the dev server">
+    ```bash
+    npm run dev
+    ```
+  </Step>
+</Steps>
+
+## Tailwind CSS 3 (legacy)
+
+If you are using Tailwind CSS v3 in an existing project and cannot upgrade yet, follow these steps.
+
+<Steps>
+  <Step title="Install packages">
+    <CodeGroup>
+
+    ```bash npm
+    npm install -D tailwindcss postcss autoprefixer
+    npx tailwindcss init -p
+    ```
+
+    ```bash pnpm
+    pnpm add -D tailwindcss postcss autoprefixer
+    pnpm dlx tailwindcss init -p
+    ```
+
+    ```bash yarn
+    yarn add -D tailwindcss postcss autoprefixer
+    yarn dlx tailwindcss init -p
+    ```
+
+    ```bash bun
+    bun add -D tailwindcss postcss autoprefixer
+    bunx tailwindcss init -p
+    ```
+
+    </CodeGroup>
+  </Step>
+
+  <Step title="Configure content paths">
+    Update `tailwind.config.ts` to include all files that use Tailwind classes.
+
+    ```ts title="tailwind.config.ts"
+    import type { Config } from "tailwindcss";
+
+    const config: Config = {
+      content: [
+        "./pages/**/*.{js,ts,jsx,tsx,mdx}",
+        "./components/**/*.{js,ts,jsx,tsx,mdx}",
+        "./app/**/*.{js,ts,jsx,tsx,mdx}",
+      ],
+      darkMode: "class",
+      theme: {
+        extend: {},
+      },
+      plugins: [],
+    };
+    export default config;
+    ```
+  </Step>
+
+  <Step title="Add Tailwind directives">
+    ```css title="app/globals.css"
+    @tailwind base;
+    @tailwind components;
+    @tailwind utilities;
+    ```
+  </Step>
+</Steps>
+
+## Key differences between v3 and v4
+
+| Feature | v3 | v4 |
+| :--- | :--- | :--- |
+| Configuration | `tailwind.config.ts` (JavaScript) | `@theme {}` block in CSS |
+| Import | `@tailwind base/components/utilities` | `@import "tailwindcss"` |
+| PostCSS plugin | `tailwindcss` | `@tailwindcss/postcss` |
+| Build speed | Baseline | Significantly faster |
+
+## Dark mode CSS variables
+
+RareUI components use CSS variables for dark mode. Add these to your `globals.css` to support both light and dark themes:
+
+```css title="app/globals.css"
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --background: oklch(1 0 0);
+    --foreground: oklch(0.145 0 0);
+    --border: oklch(0.922 0 0);
+    --muted: oklch(0.961 0 0);
+    --muted-foreground: oklch(0.556 0 0);
+  }
+
+  .dark {
+    --background: oklch(0.145 0 0);
+    --foreground: oklch(0.985 0 0);
+    --border: oklch(0.269 0 0);
+    --muted: oklch(0.205 0 0);
+    --muted-foreground: oklch(0.708 0 0);
+  }
+}
+```
+
+<Tip>
+  RareUI components reference these variables (e.g., `bg-background`, `text-foreground`, `border-border`) so they automatically adapt to light and dark modes without any extra configuration on your part.
+</Tip>
+
+## Next steps
+
+- [Add utilities](/installation/add-utilities) — install animation dependencies and the `cn()` helper
+- [CLI](/installation/cli) — add components with a single command

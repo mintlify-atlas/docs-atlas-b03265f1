@@ -1,0 +1,168 @@
+---
+title: "Animated Tab"
+description: "A controlled tab strip with a spring-animated active pill that glides between tabs, rendered on a frosted-glass container."
+---
+
+## Overview
+
+Animated Tab is a fully controlled tab component where the active indicator is a `motion.div` using Framer Motion's `layoutId` — the pill smoothly slides between buttons with spring physics rather than a static underline. The container uses `backdrop-blur` for a glassmorphism aesthetic that works in both light and dark themes.
+
+## Installation
+
+<CodeGroup>
+
+```bash npm
+npx rareui@latest add animated-tab
+```
+
+```bash pnpm
+pnpm dlx rareui@latest add animated-tab
+```
+
+```bash yarn
+yarn dlx rareui@latest add animated-tab
+```
+
+```bash bun
+bunx rareui@latest add animated-tab
+```
+
+</CodeGroup>
+
+Or copy the component manually from `components/rareui/AnimatedTab.tsx` into your project.
+
+## Usage
+
+```tsx
+'use client';
+import { useState } from 'react';
+import { AnimatedTabs } from '@/components/rareui/AnimatedTab';
+
+const tabs = [
+  { id: 'home', label: 'Home' },
+  { id: 'about', label: 'About' },
+  { id: 'services', label: 'Services' },
+  { id: 'contact', label: 'Contact' },
+];
+
+export default function MyComponent() {
+  const [activeTab, setActiveTab] = useState('home');
+
+  return (
+    <AnimatedTabs
+      tabs={tabs}
+      activeTab={activeTab}
+      onChange={setActiveTab}
+    />
+  );
+}
+```
+
+## Props
+
+<ParamField path="tabs" type="Tab[]">
+  Array of tab descriptor objects. Each entry must include an `id: string` and a `label: string`. Required.
+</ParamField>
+
+<ParamField path="activeTab" type="string">
+  The `id` of the currently active tab. This is a controlled prop — the parent component owns state. Required.
+</ParamField>
+
+<ParamField path="onChange" type="(id: string) => void">
+  Callback invoked with the tab `id` whenever a tab is clicked. Use this to update the `activeTab` value in state. Required.
+</ParamField>
+
+<ParamField path="className" type="string">
+  Additional Tailwind or CSS classes applied to the outer container `<div>`. Useful for constraining width or adding margin.
+</ParamField>
+
+## Examples
+
+### Minimal two-tab setup
+
+```tsx
+'use client';
+import { useState } from 'react';
+import { AnimatedTabs } from '@/components/rareui/AnimatedTab';
+
+export default function ToggleView() {
+  const [view, setView] = useState('list');
+
+  return (
+    <>
+      <AnimatedTabs
+        tabs={[
+          { id: 'list', label: 'List' },
+          { id: 'grid', label: 'Grid' },
+        ]}
+        activeTab={view}
+        onChange={setView}
+      />
+      {view === 'list' ? <ListView /> : <GridView />}
+    </>
+  );
+}
+```
+
+### Rendering content per tab
+
+```tsx
+const content: Record<string, React.ReactNode> = {
+  home: <HomePage />,
+  about: <AboutPage />,
+  contact: <ContactPage />,
+};
+
+export default function TabbedLayout() {
+  const [activeTab, setActiveTab] = useState('home');
+
+  return (
+    <div className="space-y-6">
+      <AnimatedTabs
+        tabs={[
+          { id: 'home', label: 'Home' },
+          { id: 'about', label: 'About' },
+          { id: 'contact', label: 'Contact' },
+        ]}
+        activeTab={activeTab}
+        onChange={setActiveTab}
+      />
+      <div>{content[activeTab]}</div>
+    </div>
+  );
+}
+```
+
+### Custom container width
+
+```tsx
+<AnimatedTabs
+  tabs={tabs}
+  activeTab={activeTab}
+  onChange={setActiveTab}
+  className="max-w-sm"
+/>
+```
+
+## Features
+
+<CardGroup cols={2}>
+  <Card title="Spring-Animated Pill">
+    The active indicator uses Framer Motion `layoutId` so it flows between tabs with spring physics, not a fixed CSS transition.
+  </Card>
+  <Card title="Glassmorphism Container">
+    The tab strip uses `backdrop-blur-xl` and semi-transparent backgrounds for a premium frosted-glass appearance.
+  </Card>
+  <Card title="Hover State">
+    Inactive tabs show a subtle highlight background on hover, also animated with Framer Motion for consistency.
+  </Card>
+  <Card title="Dark Mode">
+    Active pill inverts from black to white and text colors adapt automatically in dark theme.
+  </Card>
+  <Card title="Controlled Component">
+    State is owned by the parent, making it straightforward to sync tab selection with routing or other UI state.
+  </Card>
+  <Card title="Responsive">
+    Tabs wrap on small screens and use responsive padding to remain usable across device widths.
+  </Card>
+</CardGroup>

@@ -1,0 +1,131 @@
+---
+title: "Magnetic Scatter Text"
+description: "An interactive text animation that scatters characters on hover with magnetic spring physics, powered by Framer Motion."
+---
+
+## Overview
+
+`MagneticScatterText` splits your text into individual characters and animates each one independently using Framer Motion spring physics. On hover, letters scatter in deterministic directions based on their index, then snap back elastically — creating a magnetic pull effect.
+
+## Installation
+
+<CodeGroup>
+
+```bash npm
+npx rareui@latest add magnetic-scatter-text
+```
+
+```bash pnpm
+pnpm dlx rareui@latest add magnetic-scatter-text
+```
+
+```bash yarn
+yarn dlx rareui@latest add magnetic-scatter-text
+```
+
+```bash bun
+bunx rareui@latest add magnetic-scatter-text
+```
+
+</CodeGroup>
+
+<Note>
+Requires `framer-motion` as a peer dependency.
+```bash
+npm install framer-motion
+```
+</Note>
+
+## Usage
+
+```tsx
+import { MagneticScatterText } from "@/components/rareui/Text Animation/MagneticScatterText";
+
+export default function Hero() {
+  return (
+    <MagneticScatterText
+      text="Hover Me"
+      className="text-6xl font-bold"
+    />
+  );
+}
+```
+
+## Props
+
+<ParamField path="text" type="string" required>
+  The text content to animate. Each character is split and animated independently.
+</ParamField>
+
+<ParamField path="trigger" type="boolean" default="true">
+  Controls the animation state. When `true` the text assembles into view; when `false` it scatters away.
+</ParamField>
+
+<ParamField path="className" type="string">
+  Additional Tailwind or CSS classes applied to the container `div`. Use this to control font size, color, weight, and spacing.
+</ParamField>
+
+## Examples
+
+### Basic hover scatter
+
+```tsx
+<MagneticScatterText
+  text="Magnetic"
+  className="text-8xl font-black tracking-tighter"
+/>
+```
+
+### Controlled trigger animation
+
+```tsx
+"use client";
+import { useState } from "react";
+import { MagneticScatterText } from "@/components/rareui/Text Animation/MagneticScatterText";
+
+export default function ControlledDemo() {
+  const [show, setShow] = useState(false);
+
+  return (
+    <div className="flex flex-col items-center gap-6">
+      <button
+        onClick={() => setShow(!show)}
+        className="px-4 py-2 bg-black text-white rounded-md text-sm"
+      >
+        Toggle
+      </button>
+      <MagneticScatterText
+        text="Click the button"
+        trigger={show}
+        className="text-4xl"
+      />
+    </div>
+  );
+}
+```
+
+### Custom styled headline
+
+```tsx
+<MagneticScatterText
+  text="RareUI"
+  className="text-9xl font-black text-blue-500 tracking-tight"
+/>
+```
+
+## Features
+
+<CardGroup cols={2}>
+  <Card title="Magnetic Scattering" icon="magnet">
+    Characters fly apart in deterministic directions on hover, then spring back to their positions.
+  </Card>
+  <Card title="Deterministic Randomness" icon="shuffle">
+    Scatter offsets are derived from character index using a seeded algorithm — consistent across renders.
+  </Card>
+  <Card title="Trigger Control" icon="toggle-left">
+    Programmatically show or hide the text via the `trigger` prop, useful for scroll-driven reveals.
+  </Card>
+  <Card title="Spring Physics" icon="activity">
+    Entry and scatter animations use Framer Motion spring physics with configurable damping, stiffness, and mass.
+  </Card>
+</CardGroup>
