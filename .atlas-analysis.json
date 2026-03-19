@@ -1,0 +1,126 @@
+{
+  "projectType": "frontend",
+  "projectName": "RareUI",
+  "projectDescription": "A free, open-source collection of premium animated React components built with Tailwind CSS and Framer Motion, installable via CLI or copy-paste.",
+  "theme": "willow",
+  "primaryColor": "#ffffff",
+  "lightColor": null,
+  "darkColor": null,
+  "navigation": {
+    "tabs": [
+      {
+        "tab": "Documentation",
+        "groups": [
+          {
+            "group": "Get Started",
+            "pages": ["introduction", "quickstart"]
+          },
+          {
+            "group": "Installation",
+            "pages": [
+              "installation/install-nextjs",
+              "installation/install-tailwind",
+              "installation/add-utilities",
+              "installation/cli"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "Components",
+        "groups": [
+          {
+            "group": "Buttons",
+            "pages": [
+              "components/liquid-button",
+              "components/glass-shimmer-button",
+              "components/premium-button",
+              "components/soft-button",
+              "components/retro-pixel-button",
+              "components/neumorphism3DButton"
+            ]
+          },
+          {
+            "group": "Cards & Overlays",
+            "pages": [
+              "components/particle-card",
+              "components/premium-profile-card",
+              "components/liquid-tooltip",
+              "components/loading-spinner"
+            ]
+          },
+          {
+            "group": "Navigation",
+            "pages": [
+              "components/animated-tab",
+              "components/floating-navigation",
+              "components/toast-tabs"
+            ]
+          },
+          {
+            "group": "Text Animation",
+            "pages": [
+              "text-animation/magnetic-scatterText",
+              "text-animation/sound-text",
+              "text-animation/vapor-smokeText",
+              "text-animation/word-magnet"
+            ]
+          },
+          {
+            "group": "Interactive Backgrounds",
+            "pages": [
+              "interactive-background/liquid-wave"
+            ]
+          },
+          {
+            "group": "3D Elements",
+            "pages": [
+              "3d-elements/book-3d",
+              "3d-elements/liquid-metal"
+            ]
+          },
+          {
+            "group": "Sections",
+            "pages": [
+              "sections/image-expand-testimonial"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "keyFeatures": [
+    "Premium animated React components built with Framer Motion and WebGL shaders",
+    "CLI tool (npx rareui) for adding components to projects",
+    "Copy-paste ready components with full TypeScript support",
+    "Dark mode native support via CSS variables",
+    "Built on Tailwind CSS for easy customization",
+    "Unique effects including liquid metal, particle animations, and 3D elements"
+  ],
+  "publicApiSurface": [
+    "npx rareui@latest init",
+    "npx rareui@latest add [component-name]",
+    "npx rareui@latest diff",
+    "LiquidMetal",
+    "LiquidButton",
+    "GlassShimmerButton",
+    "PremiumButton",
+    "SoftButton",
+    "RetroPixelButton",
+    "Neumorphism3DButton",
+    "ParticleCard",
+    "PremiumProfileCard",
+    "LiquidTooltip",
+    "LoadingSpinner",
+    "AnimatedTab",
+    "FloatingNavigation",
+    "ToastTabs",
+    "MagneticScatterText",
+    "SoundText",
+    "VaporSmokeText",
+    "WordMagnet",
+    "LiquidWave",
+    "Book3D",
+    "ImageExpandTestimonial"
+  ]
+}
